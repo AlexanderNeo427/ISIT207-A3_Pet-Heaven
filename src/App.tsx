@@ -6,7 +6,7 @@ function App() {
    return (
       <div className='outline-1 outline outline-red-600 flex flex-col justify-center items-center w-full h-full'>
          <div className='flex justify-center items-center text-2xl'>
-            Hosting Firebase test
+            Hosting Firebase test 2: Electric Boogaloo
          </div>
       </div>
    )
