@@ -1,6 +1,6 @@
 import { User as FirebaseUser, onAuthStateChanged } from 'firebase/auth'
 import React, { createContext, useEffect, useState } from 'react'
-import { firebaseAuth } from '../FirebaseConfig'
+import { firebaseAuth } from '../others/FirebaseConfig'
 
 interface AuthContextType {
    firebaseUser: FirebaseUser | null
@@ -19,6 +19,7 @@ const AuthContextProvider: React.FC<{ children: React.ReactNode }> = props => {
    })
 
    return (
+      // <>{props.children}</>
       <AuthContext.Provider value={m_authState}>
          {props.children}
       </AuthContext.Provider>

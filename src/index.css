@@ -6,6 +6,8 @@
 *::before,
 *::after {
    box-sizing: border-box;
+
+   /* outline: 1px dotted red; */
 }
 
 :root {
