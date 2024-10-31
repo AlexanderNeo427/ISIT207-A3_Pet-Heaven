@@ -1,15 +1,21 @@
-// import React from "react"
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-function App() {
-   // const [count, setCount] = React.useState<number>(0)
+import TestHomePage from './pages/TestHomePage.tsx'
+import TestLoginPage from './pages/TestLoginPage.tsx'
 
-   return (
-      <div className='outline-1 outline outline-red-600 flex flex-col justify-center items-center w-full h-full'>
-         <div className='flex justify-center items-center text-2xl'>
-            Hosting Firebase test 2: Electric Boogaloo
-         </div>
-      </div>
-   )
+const browserRouter = createBrowserRouter([
+   {
+      path: "/",
+      element: <TestLoginPage/>
+   },
+   {
+      path: "/home",
+      element: <TestHomePage />
+   }
+])
+
+const App: React.FC = () => {
+   return <RouterProvider router={browserRouter}/>
 }
 
 export default App
