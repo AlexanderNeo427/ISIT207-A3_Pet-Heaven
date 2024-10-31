@@ -4,11 +4,11 @@ import { ROUTE_URL } from '../others/Globals'
 import company_logo from '../assets/images/company_logo.png'
 
 const Navbar: React.FC = () => {
-   const NAVBAR_HEIGHT_REM = 3
+   const NAVBAR_HEIGHT_REM = 4
 
    return (
       <header 
-         className='sticky top-0 z-10 flex justify-between pr-3' 
+         className='fixed top-0 left-0 right-0 z-10 flex justify-between pr-3' 
          style={{ height: NAVBAR_HEIGHT_REM + "rem" }}
       >
          {/* ----- COMPANY LOGO ------ */}
@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
 
          {/* --- SMALL NAVBAR | HIDES WHEN SCREEN EXPANDS ---- */}
          <nav className='flex justify-between md:hidden'>
-            <button className='h-full flex flex-col justify-around items-center p-2'>
+            <button className='h-full flex flex-col justify-center items-center gap-2 p-2'>
                <div className='bg-black h-[2px] w-8'></div>
                <div className='bg-black h-[2px] w-8'></div>
                <div className='bg-black h-[2px] w-8'></div>
@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
          </nav>
 
          {/* --- LARGE NAVBAR | SHOWS WHEN SCREEN EXPANDS ---- */}
-         <nav className='hidden md:flex justify-center items-center gap-8'>
+         <nav className='hidden md:flex justify-center items-center gap-8 font-medium text-lg'>
             <Link to={ROUTE_URL.HOME}>Home</Link>
             <Link to={ROUTE_URL.ABOUT}>About</Link>
             <Link to={ROUTE_URL.CONTACT_US}>Contact Us</Link>
