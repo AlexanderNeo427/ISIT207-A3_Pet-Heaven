@@ -1,17 +1,19 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import VideoGrid from '../components/VideoGrid'
+import HeroSection from '../components/HeroSection'
+import AboutUsSection from '../components/AboutUsSection'
 
 const HomePage: React.FC = () => {
    return (
-      <div>
+      <>
          <Navbar />
-         <VideoGrid />
+         <HeroSection />
+         <AboutUsSection />
 
-         <section className='h-96 outline outline-green-500'></section>
-         <section className='h-96 outline outline-purple-500'></section>
-         <section className='h-96 outline outline-red-500'></section>
-      </div>
+         <section className='h-screen bg-yellow-400'></section>
+         <section className='h-screen bg-red-500'></section>
+         <footer className='h-96 bg-black'></footer>
+      </>
    )
 }
 

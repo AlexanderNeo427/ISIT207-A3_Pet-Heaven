@@ -6,7 +6,6 @@
 *::before,
 *::after {
    box-sizing: border-box;
-
    /* outline: 1px dotted red; */
 }
 
@@ -83,6 +82,10 @@
    text-rendering: optimizeLegibility;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+   scroll-behavior: smooth;
 }
 
 html,

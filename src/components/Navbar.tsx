@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
 
    return (
       <header 
-         className='fixed top-0 left-0 right-0 z-10 flex justify-between pr-3' 
+         className='fixed top-0 left-0 right-0 z-10 flex justify-between pr-16 text-text-950' 
          style={{ height: NAVBAR_HEIGHT_REM + "rem" }}
       >
          {/* ----- COMPANY LOGO ------ */}
@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
             <Link to={ROUTE_URL.HOME}>Home</Link>
             <Link to={ROUTE_URL.ABOUT}>About</Link>
             <Link to={ROUTE_URL.CONTACT_US}>Contact Us</Link>
-            <Link to={ROUTE_URL.AUTH}>Auth</Link>
+            <Link to={ROUTE_URL.AUTH}>Login</Link>
          </nav>
       </header>
    )
