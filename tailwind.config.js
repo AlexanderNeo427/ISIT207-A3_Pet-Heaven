@@ -73,6 +73,15 @@ export default {
                     950: 'rgb(238, 246, 242)',
                 }
             },
+            spacing: {
+                'text-xxs': '0.3em',
+                'text-xs': '0.486em',
+                'text-s': '0.7862em',
+                'text-m': '1.272em',
+                'text-l': '2.058em',
+                'text-xl': '3.33em',
+                'text-xxl': '5.388em',
+            },
         },
     },
     plugins: [],
