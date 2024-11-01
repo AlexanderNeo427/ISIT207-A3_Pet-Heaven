@@ -17,7 +17,7 @@ const SvgCircle: React.FC<SvgCircleProps> = props => {
    const strokeDashoffset = fillCircumference * (1 - props.fillPercent / 100);
 
    return (
-      <svg className='-rotate-90' width={props.radius * 2} height={props.radius * 2}>
+      <svg className='-rotate-90 absolute top-0 bottom-0 left-0 right-0' width={props.radius * 2} height={props.radius * 2}>
          <circle
             r={props.radius - props.bgWidth * 0.5}
             cx={props.radius}
@@ -49,16 +49,14 @@ interface PercentageCircleProps {
    statText: string
 }
 
-const PercentageCircle: React.FC<PercentageCircleProps> = props => {
+const PercentageCircle: React.FC<PercentageCircleProps> = props => { 
+   const SIZE = 32
+
    return (
       <div className='max-w-sm flex flex-col justify-center items-center'>
-         <div className='w-16 h-16'>
-            {/* <svg width="150" height="150">
-               <circle r="70" cx="75" cy="75" fill="transparent" stroke="lightgrey" stroke-width="0.5rem" stroke-dasharray="439.8" stroke-dashoffset="0"></circle>
-               <circle r="70" cx="75" cy="75" fill="transparent" stroke="blue" stroke-width="0.5rem" stroke-dasharray="439.8" stroke-dashoffset="99"></circle>
-            </svg> */}
+         <div style={{ width: SIZE, height: SIZE }} className='relative flex justify-center items-center outline outline-green-400'>
             <SvgCircle
-               radius={80} fillPercent={10}
+               radius={SIZE * 2} fillPercent={10}
                fillWidth={5} fillColor='red'
                bgWidth={5} bgColor='gray'
             />
