@@ -74,6 +74,14 @@ export default {
                 }
             },
             spacing: {
+                'xxs': '0.236em',
+                'xs': '0.382em',
+                's': '0.618em',
+                'm': '0.1em',
+                'l': '1.618em',
+                'xl': '2.618em',
+                'xxl': '4.236em',
+
                 'text-xxs': '0.3em',
                 'text-xs': '0.486em',
                 'text-s': '0.7862em',

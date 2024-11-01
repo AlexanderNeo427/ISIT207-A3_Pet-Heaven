@@ -44,25 +44,41 @@ const SvgCircle: React.FC<SvgCircleProps> = props => {
 }
 
 interface PercentageCircleProps {
-   percentage: number
    animTimeSeconds: number
    statText: string
+
+   radius: number
+
+   fillPercent: number
+   fillWidth: number
+   fillColor: string
+
+   bgWidth: number
+   bgColor: string
 }
 
-const PercentageCircle: React.FC<PercentageCircleProps> = props => { 
-   const SIZE = 32
-
+const PercentageCircle: React.FC<PercentageCircleProps> = props => {
    return (
       <div className='max-w-sm flex flex-col justify-center items-center'>
-         <div style={{ width: SIZE, height: SIZE }} className='relative flex justify-center items-center outline outline-green-400'>
+         <div 
+            style={{ width: props.radius * 2, height: props.radius * 2 }} 
+            className='relative flex justify-center items-center'
+         >
+            <div 
+               style={{ width: props.radius * Math.sqrt(2), height: props.radius * Math.sqrt(2) }} 
+               className='flex flex-col justify-center items-center text-center pb-8'>
+               <span className='font-extralight text-3xl text-text-200'>%</span>
+               <span className='font-extrabold text-7xl mb-xs'>{props.fillPercent}</span>
+               <p className='h-10 font-medium text-xs text-text-100'>{props.statText}</p>
+            </div>
+
+            {/* Absolutely positioned circle - Do not touch */}
             <SvgCircle
-               radius={SIZE * 2} fillPercent={10}
-               fillWidth={5} fillColor='red'
-               bgWidth={5} bgColor='gray'
+               radius={props.radius} fillPercent={props.fillPercent}
+               fillWidth={props.fillWidth} fillColor={props.fillColor}
+               bgWidth={props.bgWidth} bgColor={props.bgColor}
             />
-            <span className='font-semibold text-xl'>{props.percentage}%</span>
          </div>
-         <p className='font-medium text-sm'>{props.statText}</p>
       </div>
    )
 }
