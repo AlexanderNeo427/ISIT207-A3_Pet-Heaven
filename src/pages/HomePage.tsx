@@ -1,8 +1,10 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import HeroSection from '../components/HeroSection'
-import AboutUsSection from '../components/AboutUsSection'
-import PetStatsSection from '../components/PetStatsSection'
+import HeroSection from '../components/sections/HeroSection'
+import AboutUsSection from '../components/sections/AboutUsSection'
+import PetStatsSection from '../components/sections/PetStatsSection'
+import AdoptionStepsSection from '../components/sections/AdoptionStepsSection'
+import FooterSection from '../components/sections/FooterSection'
 
 const HomePage: React.FC = () => {
    return (
@@ -11,10 +13,8 @@ const HomePage: React.FC = () => {
          <HeroSection />
          <AboutUsSection />
          <PetStatsSection />
-
-         <section className='h-screen bg-yellow-400'></section>
-         <section className='h-screen bg-red-500'></section>
-         <footer className='h-96 bg-black'></footer>
+         <AdoptionStepsSection />
+         <FooterSection />
       </main>
    )
 }

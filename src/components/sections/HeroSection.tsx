@@ -1,10 +1,10 @@
 import React from 'react'
-import pet_video_1 from '../assets/videos/pet_video_1.mp4'
-import pet_video_2 from '../assets/videos/pet_video_2.mp4'
-import pet_video_3 from '../assets/videos/pet_video_3.mp4'
-import pet_video_4 from '../assets/videos/pet_video_4.mp4'
-import pet_video_5 from '../assets/videos/pet_video_5.mp4'
-import pet_video_6 from '../assets/videos/pet_video_6.mp4'
+import pet_video_1 from '../../assets/videos/pet_video_1.mp4'
+import pet_video_2 from '../../assets/videos/pet_video_2.mp4'
+import pet_video_3 from '../../assets/videos/pet_video_3.mp4'
+import pet_video_4 from '../../assets/videos/pet_video_4.mp4'
+import pet_video_5 from '../../assets/videos/pet_video_5.mp4'
+import pet_video_6 from '../../assets/videos/pet_video_6.mp4'
 
 const HeroSection: React.FC = () => {
    return (

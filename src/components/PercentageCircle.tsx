@@ -67,8 +67,8 @@ const PercentageCircle: React.FC<PercentageCircleProps> = props => {
             <div 
                style={{ width: props.radius * Math.sqrt(2), height: props.radius * Math.sqrt(2) }} 
                className='flex flex-col justify-center items-center text-center pb-8'>
-               <span className='font-extralight text-3xl text-text-200'>%</span>
-               <span className='font-extrabold text-7xl mb-xs'>{props.fillPercent}</span>
+               <span className='font-extralight text-2xl text-text-200'>%</span>
+               <span className='font-extrabold text-7xl mb-7'>{props.fillPercent}</span>
                <p className='h-10 font-medium text-xs text-text-100'>{props.statText}</p>
             </div>
 

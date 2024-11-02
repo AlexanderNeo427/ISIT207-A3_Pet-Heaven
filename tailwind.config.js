@@ -74,13 +74,15 @@ export default {
                 }
             },
             spacing: {
-                'xxs': '0.236em',
-                'xs': '0.382em',
-                's': '0.618em',
-                'm': '0.1em',
-                'l': '1.618em',
-                'xl': '2.618em',
-                'xxl': '4.236em',
+                'margin-xxs': '0.236em',
+                'margin-xs': '0.382em',
+                'margin-s': '0.618em',
+                'margin-m': '1em',
+                'margin-l': '1.618em',
+                'margin-xl': '2.618em',
+                'margin-2xl': '4.236em',
+                'margin-3xl': '6.853725em',
+                'margin-4xl': '11.0893271018em',
 
                 'text-xxs': '0.3em',
                 'text-xs': '0.486em',
@@ -88,7 +90,8 @@ export default {
                 'text-m': '1.272em',
                 'text-l': '2.058em',
                 'text-xl': '3.33em',
-                'text-xxl': '5.388em',
+                'text-2xl': '5.388em',
+                'text-3xl': '8.71768692em'
             },
         },
     },
