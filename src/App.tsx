@@ -4,7 +4,7 @@ import AuthPage from './pages/AuthPage'
 import { ROUTE_URL } from './others/Globals'
 
 const browserRouter = createBrowserRouter([
-   { path: ROUTE_URL.HOME, element: <HomePage/> },
+   { path: ROUTE_URL.HOME, element: <HomePage /> },
    { path: ROUTE_URL.AUTH, element: <AuthPage /> }
 ])
 
