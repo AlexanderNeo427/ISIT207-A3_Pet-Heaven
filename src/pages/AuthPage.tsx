@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Navbar from '../components/Navbar'
 
 const AuthPage: React.FC = () => {
+   const isLoginMode = useState<boolean>(true)
+
    return (
-      <div>AuthPage</div>
+      <>
+         <Navbar />
+         Auth Page
+      </>
    )
 }
 
