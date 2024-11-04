@@ -13,12 +13,12 @@ const AdoptionGalleryPage: React.FC = () => {
 
          try {
             const catApiRes = await axios.get(
-               `https://api.thecatapi.com/v1/images/search?limit=${imageCount}`, {
+               `https://api.thecatapi.com/v1/images/search?has_breeds=1&?limit=${imageCount}`, {
                   headers: { 'x-api-key': import.meta.env.VITE_CAT_API_KEY }
                }
             )
             const dogApiRes = await axios.get(
-               `https://api.thedogapi.com/v1/images/search?limit=${imageCount}`, { 
+               `https://api.thedogapi.com/v1/images/search?has_breeds=1&?limit=${imageCount}`, { 
                   headers: { 'x-api-key': import.meta.env.VITE_DOG_API_KEY 
                }
             })

@@ -3,7 +3,7 @@ import { PET_API_TYPE, PetApiData, Utils } from '../others/Globals'
 
 const PetInfoCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
    return (
-      <div className='my-3 relative cursor-pointer outline outline-2 outline-red-500'>
+      <div className='my-3 relative cursor-pointer'>
          <img className='min-h-64 rounded-xl object-cover' src={petApiData.imgURL} alt="" />
          <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-center items-end'>
             <div className='flex flex-col justify-end items-start text-text-950'>
