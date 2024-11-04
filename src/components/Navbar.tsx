@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import { ROUTE_URL } from '../others/Globals'
 import company_logo from '../assets/images/company_logo.png'
 
@@ -27,7 +27,9 @@ const Navbar: React.FC = () => {
             h-16 pr-4 md:pr-8 text-text-950 font-medium text-xl transition-colors'
       >
          {/* ----- COMPANY LOGO ------ */}
-         <img src={company_logo} className='h-full w-auto cursor-pointer' alt="" />
+         <Link className='h-full w-auto' to={ROUTE_URL.HOME}>
+            <img src={company_logo} className='h-full w-auto' alt="" />
+         </Link>
 
          {/* --- SMALL NAVBAR | HIDES WHEN SCREEN EXPANDS ---- */}
          <nav className='flex justify-between md:hidden'>
@@ -46,11 +48,12 @@ const Navbar: React.FC = () => {
             <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.HOME}>Home</Link>
             <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.ABOUT}>About</Link>
             <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.CONTACT_US}>Contact Us</Link>
+            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.AUTH}>Login</Link>
          </nav>
          <Link className='
             hidden justify-center items-center bg-primary-500 px-7 h-11 rounded-lg
             md:flex hover:bg-primary-600 transition-colors
-         ' to={ROUTE_URL.AUTH}>Login</Link>
+         ' to={ROUTE_URL.GALLERY}>Adopt</Link>
       </header>
    )
 }
