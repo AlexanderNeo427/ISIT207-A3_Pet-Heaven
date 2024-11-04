@@ -14,17 +14,20 @@ export abstract class BreedData { }
 export class DogBreedData extends BreedData {
     breed: string
     // bredFor: string[]
-    heightRangeCM: number[]
-    lifespanRange: number[]
+    // heightRangeCM: number[]
+    // lifespanRange: number[]
     // temperament: string[]
     // weightKG: number[]
 
     constructor(breedsObj: any) {
+        console.log("About to construct from this obj: ", breedsObj)
+
         super()
         this.breed = breedsObj.breed
         // this.bredFor = breedsObj.bred_for.split(",").map((s: string) => s.trim())
-        this.heightRangeCM = breedsObj.height.metric.split("-").map((h: string) => parseInt(h))
-        this.lifespanRange = breedsObj.life_span.split("-").map((ls: string) => parseInt(ls))
+        // this.heightRangeCM = breedsObj.height.metric.split("-").map((h: string) => parseInt(h))
+        console.log("Dog Height Data: ", breedsObj.height.metric)
+        // this.lifespanRange = breedsObj.life_span.split("-").map((ls: string) => parseInt(ls))
     }
 }
 
@@ -85,8 +88,10 @@ export const Utils = {
         return new Date(randomTimestamp);
     },
     convertToPetApiData(obj: any, apiType: PET_API_TYPE): PetApiData {
+        console.log(apiType, obj.breeds[0])
         return new PetApiData(
-            obj.id, obj.url,
+            obj.id, obj.url, 
+            new DogBreedData(obj),
             apiType === PET_API_TYPE.DOG ?
                 new DogBreedData(obj.breeds[0]) : 
                 new CatBreedData(obj.breeds[0]),

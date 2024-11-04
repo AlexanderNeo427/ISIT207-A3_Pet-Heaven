@@ -13,11 +13,11 @@ const AdoptionGalleryPage: React.FC = () => {
          const imageCount = Math.ceil(fetchCount / 2)
 
          try {
-            const catApiRes = await axios.get(
-               `https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=${imageCount}`, {
-                  headers: { 'x-api-key': import.meta.env.VITE_CAT_API_KEY }
-               }
-            )
+            // const catApiRes = await axios.get(
+            //    `https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=${imageCount}`, {
+            //       headers: { 'x-api-key': import.meta.env.VITE_CAT_API_KEY }
+            //    }
+            // )
             const dogApiRes = await axios.get(
                `https://api.thedogapi.com/v1/images/search?has_breeds=1&limit=${imageCount}`, { 
                   headers: { 'x-api-key': import.meta.env.VITE_DOG_API_KEY 
@@ -25,9 +25,10 @@ const AdoptionGalleryPage: React.FC = () => {
             })
 
             const allPetData = [
-               ...catApiRes.data
-                           .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.CAT))
-                           .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif')),
+               // ...catApiRes.data
+               //             .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.CAT))
+               //             .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif'))
+               // ,
                ...dogApiRes.data
                            .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.DOG))
                            .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif'))
@@ -37,10 +38,10 @@ const AdoptionGalleryPage: React.FC = () => {
             setPetData(allPetData)
          }
          catch (err: any) {
-            console.error("Error fetching from TheCatAPI: ", err.message)
+            console.error("Error fetching from API: ", err.message)
          }
       }
-      fetchPetApiData(6)
+      fetchPetApiData(1)
    }, [])
    
    return (
