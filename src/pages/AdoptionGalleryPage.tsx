@@ -33,14 +33,14 @@ const AdoptionGalleryPage: React.FC = () => {
                            .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif'))
             ]
             Utils.durstenfeldShuffle(allPetData)
-            // console.log("AdoptionGalleryPage - All pet data: ", allPetData)
+            console.log("All pet data: ", allPetData)
             setPetData(allPetData)
          }
          catch (err: any) {
             console.error("Error fetching from TheCatAPI: ", err.message)
          }
       }
-      fetchPetApiData(15)
+      fetchPetApiData(6)
    }, [])
    
    return (
@@ -55,11 +55,11 @@ const AdoptionGalleryPage: React.FC = () => {
             <div className='text-center rounded-full px-6 py-3 bg-gray-300'>Le Option</div>
          </section>
          <section className='min-h-96 flex justify-center items-center'>
-            <div className='max-w-3xl columns-2 sm:columns-3 2xl:columns-4'>
-               {
-                  m_petData.map(data => <PetInfoCard key={data.id} petApiData={data} />)
-               }
-            </div>
+            <div className='max-w-3xl columns-2 sm:columns-3 2xl:columns-4'>{
+               m_petData.map(data => {
+                  return <PetInfoCard key={data.id} petApiData={data} />
+               })
+            }</div>
          </section>
          <FooterSection />
       </main>

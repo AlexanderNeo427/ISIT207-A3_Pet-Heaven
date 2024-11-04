@@ -9,20 +9,54 @@ export const ROUTE_URL = {
 
 export enum PET_API_TYPE { DOG, CAT }
 
-export interface PetApiData {
+export abstract class BreedData { }
+
+export class DogBreedData extends BreedData {
+    breed: string
+    // bredFor: string[]
+    heightRangeCM: number[]
+    lifespanRange: number[]
+    // temperament: string[]
+    // weightKG: number[]
+
+    constructor(breedsObj: any) {
+        super()
+        this.breed = breedsObj.breed
+        // this.bredFor = breedsObj.bred_for.split(",").map((s: string) => s.trim())
+        this.heightRangeCM = breedsObj.height.metric.split("-").map((h: string) => parseInt(h))
+        this.lifespanRange = breedsObj.life_span.split("-").map((ls: string) => parseInt(ls))
+    }
+}
+
+export class CatBreedData extends BreedData {
+    constructor(breedsObj: any) {
+        super()
+    }
+}
+
+export class PetApiData {
     id: number
     imgURL: string
-    breeds: any
-    // breeds: {
-    //     name: string
-    //     heightCM: number
-    //     temperament: string[]
-    //     weightKG: number
-    // }
-    
+    breedData: BreedData | null
     height: number
     width: number
     apiType: PET_API_TYPE
+
+    constructor(id: number, imgURL: string, breedData: any, height: number, width: number, apiType: PET_API_TYPE) {
+        this.id = id
+        this.imgURL = imgURL
+        this.breedData = null
+        this.height = height
+        this.width = width
+        this.apiType = apiType
+
+        if (apiType === PET_API_TYPE.CAT) {
+            this.breedData = new CatBreedData(breedData)
+        }
+        else if (apiType === PET_API_TYPE.DOG) {
+            this.breedData = new DogBreedData(breedData)
+        }
+    }
 }
 
 export const Utils = {
@@ -51,14 +85,13 @@ export const Utils = {
         return new Date(randomTimestamp);
     },
     convertToPetApiData(obj: any, apiType: PET_API_TYPE): PetApiData {
-        return {
-            id: obj.id,
-            imgURL: obj.url,
-            breeds: obj.breeds,
-            height: obj.height,
-            width: obj.width,
-            apiType: apiType
-        } as PetApiData
+        return new PetApiData(
+            obj.id, obj.url,
+            apiType === PET_API_TYPE.DOG ?
+                new DogBreedData(obj.breeds[0]) : 
+                new CatBreedData(obj.breeds[0]),
+            obj.height, obj.width, apiType
+        )
     },
     durstenfeldShuffle(arr: any[]): void {
         for (var i = arr.length - 1; i >= 0; i--) {
