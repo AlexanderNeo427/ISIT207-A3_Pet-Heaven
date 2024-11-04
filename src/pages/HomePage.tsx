@@ -10,7 +10,7 @@ import TestimonialsSection from '../components/sections/TestimonialsSection'
 const HomePage: React.FC = () => {
    return (
       <main>
-         <Navbar />
+         <Navbar scrollFadeMax={300}/>
          <HeroSection />
          <AboutUsSection />
          <PetStatsSection />

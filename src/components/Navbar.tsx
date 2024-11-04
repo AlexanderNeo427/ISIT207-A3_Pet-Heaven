@@ -1,20 +1,31 @@
 import React, { useEffect, useRef } from 'react'
-import { Link, Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ROUTE_URL } from '../others/Globals'
 import company_logo from '../assets/images/company_logo.png'
 
-const Navbar: React.FC = () => {
+export interface NavbarProps {
+   useSticky?: boolean
+   scrollFadeMax?: number 
+}
+
+const Navbar: React.FC<NavbarProps> = props => {
    const headerRef = useRef<HTMLElement>(null)
 
    useEffect(() => {
-      const scrollHandler = (_: any) => {
-         const SCROLL_MIN = 300
-         const clamped = Math.max(0, Math.min(SCROLL_MIN, window.scrollY))
-         const t = Math.min(clamped / SCROLL_MIN, 0.95)
+      const scrollHandler = () => {
+         const scrollFadeMax = props.scrollFadeMax || -1
+         if (scrollFadeMax < 0 && headerRef.current?.style) {
+            headerRef.current.style.backgroundColor = 'rgba(127, 85, 170, 1)'
+            return
+         }
+
+         const clamped = Math.max(0, Math.min(scrollFadeMax, window.scrollY))
+         const t = Math.min(clamped / scrollFadeMax, 0.95)
          if (headerRef.current?.style) {
             headerRef.current.style.backgroundColor = `rgba(127, 85, 170, ${t})`
          }
       }
+      scrollHandler()
       window.addEventListener('scroll', scrollHandler)
       return () => window.removeEventListener('scroll', scrollHandler)
    }, [])
@@ -22,8 +33,11 @@ const Navbar: React.FC = () => {
    return (
       <header
          ref={headerRef}
+         style={{
+            position: props.useSticky ? "sticky" : "fixed"
+         }}
          className='
-            fixed top-0 left-0 right-0 z-10 flex justify-between items-center
+            top-0 left-0 right-0 z-10 flex justify-between items-center
             h-16 pr-4 md:pr-8 text-text-950 font-medium text-xl transition-colors'
       >
          {/* ----- COMPANY LOGO ------ */}
