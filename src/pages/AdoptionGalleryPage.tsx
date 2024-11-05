@@ -23,6 +23,7 @@ const AdoptionGalleryPage: React.FC = () => {
                   headers: { 'x-api-key': import.meta.env.VITE_DOG_API_KEY 
                }
             })
+            // console.log(...catApiRes.data, ...dogApiRes.data)
 
             const allPetData = [
                ...catApiRes.data
@@ -35,12 +36,13 @@ const AdoptionGalleryPage: React.FC = () => {
             ]
             Utils.durstenfeldShuffle(allPetData)
             setPetData(allPetData)
+            console.log(allPetData)
          }
          catch (err: any) {
             console.error("Error fetching from API: ", err.message)
          }
       }
-      fetchPetApiData(1)
+      fetchPetApiData(10)
    }, [])
    
    return (
@@ -55,7 +57,7 @@ const AdoptionGalleryPage: React.FC = () => {
             <div className='text-center rounded-full px-6 py-3 bg-gray-300'>Le Option</div>
          </section>
          <section className='min-h-96 flex justify-center items-center'>
-            <div className='max-w-3xl columns-2 sm:columns-3 2xl:columns-4'>{
+            <div className='max-w-6xl mx-margin-s columns-2 md:columns-3 2xl:columns-4 my-margin-l'>{
                m_petData.map(data => {
                   return <PetInfoCard key={data.id} petApiData={data} />
                })

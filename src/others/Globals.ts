@@ -15,57 +15,37 @@ export interface ValueRange {
     unit: string
 }
 
-export abstract class BreedData { }
-
-export class DogBreedData extends BreedData {
+export class BreedData { 
     breed: string
-    bredFor: string[]
-    heightRange: ValueRange
-    lifespanRange: ValueRange
+    lifespan: string
+    weight: string
     temperaments: string[]
-    // weightRange : 
 
     constructor(breedsObj: any) {
-        super()
         this.breed = breedsObj.name
-        this.bredFor = breedsObj.bred_for
-
-        const heightArr = breedsObj.height.metric.split("-").map((h: string) => parseInt(h))
-        this.heightRange = {  
-            min: heightArr[0],
-            max: heightArr[1],
-            unit: "cm"
-        } as ValueRange
-
-        const lifespanArr = breedsObj.life_span.split("-").map((ls: string) => parseInt(ls))
-        this.lifespanRange = {
-            min: lifespanArr[0], 
-            max: lifespanArr[1], 
-            unit: "years"
-        } as ValueRange
-
+        this.lifespan = breedsObj.life_span
+        this.weight = breedsObj.weight.metric
         this.temperaments = breedsObj.temperament.split(",").map((t: string) => t.trim())
     }
 }
 
-export class CatBreedData extends BreedData {
-    breed: string
-    description: string
-    temperaments: string[]
-    lifespanRange: ValueRange
+export class DogBreedData extends BreedData {
+    bredFor: string[]
+    height: string
 
     constructor(breedsObj: any) {
-        super()
-        this.breed = breedsObj.name
-        this.description = breedsObj.description
-        this.temperaments = breedsObj.temperament.split(",").map((t: string) => t.trim())
+        super(breedsObj)
+        this.bredFor = breedsObj.bred_for
+        this.height = breedsObj.height.metric
+    }
+}
 
-        const lifespanArr = breedsObj.life_span.split("-").map((ls: string) => parseInt(ls))
-        this.lifespanRange = {
-            min: lifespanArr[0], 
-            max: lifespanArr[1], 
-            unit: "years"
-        } as ValueRange
+export class CatBreedData extends BreedData {
+    description: string
+
+    constructor(breedsObj: any) {
+        super(breedsObj)
+        this.description = breedsObj.description
     }
 }
 

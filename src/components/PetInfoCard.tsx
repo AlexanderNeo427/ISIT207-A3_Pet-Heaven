@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { PET_API_TYPE, PetApiData, Utils } from '../others/Globals'
+import { PetApiData } from '../others/Globals'
 
 const PetInfoCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
    const [m_isHovered, setIsHovered] = useState<boolean>(false) 
-   
+
    return (
       <div
          onMouseEnter={() => setIsHovered(true)} 
@@ -19,15 +19,15 @@ const PetInfoCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
                }}
                className='
                   flex flex-col justify-end items-start text-text-950 
-                  w-full rounded-b-xl overflow-hidden px-3
-                  bg-gradient-to-t from-primary-400 from-15% to-transparent transition-all ease-out'
+                  w-full rounded-b-xl overflow-hidden px-3 shadow-md hover:shadow-xl
+                  bg-gradient-to-t from-background-300 from-25% to-transparent transition-all ease-out'
             >
-               <span><strong>Name: </strong>Lorem ipsum Dolor</span>
-               <span><strong>Age: </strong>{Utils.randInt(1, 14)}</span>
-               {/* <span><strong>Breed: </strong>{petApiData.breeds}</span> */}
-               <span><strong>Type: </strong>{
-                  petApiData.apiType === PET_API_TYPE.DOG ? "Dog" : "Cat"
-               }</span>
+               <span><strong>Breed: </strong>{petApiData.breedData?.breed}</span>
+               <span><strong>Lifespan: </strong>{petApiData.breedData?.lifespan}</span>
+               <span><strong>Weight: </strong>{petApiData.breedData?.weight}</span>
+               {/* <span className='overflow-ellipsis'><strong>Temperaments: </strong>
+                  {petApiData.breedData?.temperaments.map(t => <>{t},</>)}
+               </span> */}
             </div>
          </div>
       </div>
