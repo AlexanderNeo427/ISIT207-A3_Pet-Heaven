@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { PetApiData } from '../others/Globals'
+import { PET_API_TYPE, PetApiData } from '../others/Globals'
 
 const PetInfoCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
    const [m_isHovered, setIsHovered] = useState<boolean>(false) 
@@ -23,11 +23,11 @@ const PetInfoCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
                   bg-gradient-to-t from-background-300 from-25% to-transparent transition-all ease-out'
             >
                <span><strong>Breed: </strong>{petApiData.breedData?.breed}</span>
-               <span><strong>Lifespan: </strong>{petApiData.breedData?.lifespan}</span>
-               <span><strong>Weight: </strong>{petApiData.breedData?.weight}</span>
-               {/* <span className='overflow-ellipsis'><strong>Temperaments: </strong>
-                  {petApiData.breedData?.temperaments.map(t => <>{t},</>)}
-               </span> */}
+               <span><strong>Lifespan: </strong>
+                  {petApiData.breedData?.lifespan}
+                  {petApiData.apiType === PET_API_TYPE.CAT ? " years" : ""}
+               </span>
+               <span><strong>Weight: </strong>{petApiData.breedData?.weight} kg</span> 
             </div>
          </div>
       </div>

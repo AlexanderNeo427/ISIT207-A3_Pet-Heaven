@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ROUTE_URL } from '../others/Globals'
 import company_logo from '../assets/images/company_logo.png'
 
-export interface NavbarProps {
+interface NavbarProps {
    useSticky?: boolean
    scrollFadeMax?: number 
 }
@@ -12,17 +12,19 @@ const Navbar: React.FC<NavbarProps> = props => {
    const headerRef = useRef<HTMLElement>(null)
 
    useEffect(() => {
+      const HEADER_RGB = '81, 22, 96'
+
       const scrollHandler = () => {
          const scrollFadeMax = props.scrollFadeMax || -1
          if (scrollFadeMax < 0 && headerRef.current?.style) {
-            headerRef.current.style.backgroundColor = 'rgba(127, 85, 170, 1)'
+            headerRef.current.style.backgroundColor = `rgba(${HEADER_RGB}, 1)`
             return
          }
 
          const clamped = Math.max(0, Math.min(scrollFadeMax, window.scrollY))
          const t = Math.min(clamped / scrollFadeMax, 0.95)
          if (headerRef.current?.style) {
-            headerRef.current.style.backgroundColor = `rgba(127, 85, 170, ${t})`
+            headerRef.current.style.backgroundColor = `rgba(${HEADER_RGB}, ${t})`
          }
       }
       scrollHandler()

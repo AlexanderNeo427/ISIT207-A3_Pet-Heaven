@@ -9,12 +9,6 @@ export const ROUTE_URL = {
 
 export enum PET_API_TYPE { DOG, CAT }
 
-export interface ValueRange {
-    min: number
-    max: number
-    unit: string
-}
-
 export class BreedData { 
     breed: string
     lifespan: string
@@ -118,7 +112,3 @@ export const Utils = {
         }
     }
 }
-
-export const NAMES: string[] = [
-
-]
