@@ -9,31 +9,63 @@ export const ROUTE_URL = {
 
 export enum PET_API_TYPE { DOG, CAT }
 
+export interface ValueRange {
+    min: number
+    max: number
+    unit: string
+}
+
 export abstract class BreedData { }
 
 export class DogBreedData extends BreedData {
     breed: string
-    // bredFor: string[]
-    // heightRangeCM: number[]
-    // lifespanRange: number[]
-    // temperament: string[]
-    // weightKG: number[]
+    bredFor: string[]
+    heightRange: ValueRange
+    lifespanRange: ValueRange
+    temperaments: string[]
+    // weightRange : 
 
     constructor(breedsObj: any) {
-        console.log("About to construct from this obj: ", breedsObj)
-
         super()
-        this.breed = breedsObj.breed
-        // this.bredFor = breedsObj.bred_for.split(",").map((s: string) => s.trim())
-        // this.heightRangeCM = breedsObj.height.metric.split("-").map((h: string) => parseInt(h))
-        console.log("Dog Height Data: ", breedsObj.height.metric)
-        // this.lifespanRange = breedsObj.life_span.split("-").map((ls: string) => parseInt(ls))
+        this.breed = breedsObj.name
+        this.bredFor = breedsObj.bred_for
+
+        const heightArr = breedsObj.height.metric.split("-").map((h: string) => parseInt(h))
+        this.heightRange = {  
+            min: heightArr[0],
+            max: heightArr[1],
+            unit: "cm"
+        } as ValueRange
+
+        const lifespanArr = breedsObj.life_span.split("-").map((ls: string) => parseInt(ls))
+        this.lifespanRange = {
+            min: lifespanArr[0], 
+            max: lifespanArr[1], 
+            unit: "years"
+        } as ValueRange
+
+        this.temperaments = breedsObj.temperament.split(",").map((t: string) => t.trim())
     }
 }
 
 export class CatBreedData extends BreedData {
+    breed: string
+    description: string
+    temperaments: string[]
+    lifespanRange: ValueRange
+
     constructor(breedsObj: any) {
         super()
+        this.breed = breedsObj.name
+        this.description = breedsObj.description
+        this.temperaments = breedsObj.temperament.split(",").map((t: string) => t.trim())
+
+        const lifespanArr = breedsObj.life_span.split("-").map((ls: string) => parseInt(ls))
+        this.lifespanRange = {
+            min: lifespanArr[0], 
+            max: lifespanArr[1], 
+            unit: "years"
+        } as ValueRange
     }
 }
 
@@ -54,10 +86,14 @@ export class PetApiData {
         this.apiType = apiType
 
         if (apiType === PET_API_TYPE.CAT) {
+            // console.log("PetApiData ctor() - Creating catBreedData from breedData: ", breedData)
             this.breedData = new CatBreedData(breedData)
+            // console.log("PetApiData ctor() - Newly created catBreedData: ", this.breedData)
         }
         else if (apiType === PET_API_TYPE.DOG) {
+            // console.log("PetApiData ctor() - Creating dogBreedData from breedData: ", breedData)
             this.breedData = new DogBreedData(breedData)
+            // console.log("PetApiData ctor() - Newly created dogBreedData: ", this.breedData)
         }
     }
 }
@@ -88,13 +124,8 @@ export const Utils = {
         return new Date(randomTimestamp);
     },
     convertToPetApiData(obj: any, apiType: PET_API_TYPE): PetApiData {
-        console.log(apiType, obj.breeds[0])
         return new PetApiData(
-            obj.id, obj.url, 
-            new DogBreedData(obj),
-            apiType === PET_API_TYPE.DOG ?
-                new DogBreedData(obj.breeds[0]) : 
-                new CatBreedData(obj.breeds[0]),
+            obj.id, obj.url, obj.breeds[0],
             obj.height, obj.width, apiType
         )
     },
