@@ -1,38 +1,55 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import FooterSection from '../components/sections/FooterSection'
-import banner_img from "../assets/images/golden_retriever.jpg"
+import login_img from "../assets/images/golden_retriever.jpg"
+import signup_img from "../assets/images/golden_retriever_2.jpg"
+import { motion as framer, useWillChange } from 'framer-motion'
 
 const AuthPage: React.FC = () => {
    const [m_loginMode, setLoginMode] = useState<boolean>(true)
-   const heightRef = useRef<HTMLDivElement>(null)
+   const [m_isAnimating, setIsAnimating] = useState<boolean>(false)
+   const willChange = useWillChange()
 
-   useEffect(() => {
-      console.log("Height: ", heightRef.current?.offsetHeight) 
-   }, [heightRef.current])
+   const ROTATION_TIME_MS = 600
+
+   const toggleClickHandler = (evt: React.MouseEvent) => {
+      evt.preventDefault()
+
+      if (!m_isAnimating) {
+         setIsAnimating(true)
+         setTimeout(() => {
+            setLoginMode(prev => !prev)
+            setIsAnimating(false)
+         }, ROTATION_TIME_MS)
+      }
+   }
 
    return (
       <main>
          <Navbar useSticky={true} />
-         <section ref={heightRef} className='min-h-[32rem] flex justify-center items-center'>
+         <framer.section
+            style={{ willChange }}
+            variants={{
+               default: { rotateY: 0 },
+               rotated: { rotateY: 90 }
+            }}
+            animate={m_isAnimating ? 'rotated' : 'default'}
+            transition={{ duration: ROTATION_TIME_MS / 1000 }}
+            className='flex justify-center items-center'>
             <div className='
-               flex flex-row justify-start items-center 
-               rounded-lg bg-white shadow-lg my-margin-2xl max-h-[35rem]
-               sm:max-w-xl md:max-w-2xl lg:max-w-4xl overflow-hidden
+               flex justify-between items-center rounded-2xl 
+               bg-white shadow-xl my-margin-2xl h-[36rem]
+               md:max-w-3xl xl:max-w-4xl xl:h-[42rem]
             '>
-               <img
-                  style={{ height: heightRef.current?.offsetHeight }}
-                  className='hidden md:block object-cover w-[45%]'
-                  src={banner_img} alt=""
-               />
+               <div
+                  style={{ backgroundImage: `url(${m_loginMode ? login_img : signup_img})` }}
+                  className='hidden md:block bg-cover h-full w-[99rem] rounded-l-2xl'>
+               </div>
 
-               <form className='flex-grow flex justify-center items-center px-10 py-12'>
-                  <div className='w-full max-w-96 flex flex-col justify-start items-center'>
+               <form className='flex justify-center items-center min-w-[24rem] xl:min-w-[28rem] px-10'>
+                  <div className='w-full flex flex-col justify-start items-center'>
                      {
-                        <button onClick={e => {
-                           e.preventDefault()
-                           setLoginMode(prev => !prev)
-                        }}
+                        <button onClick={toggleClickHandler}
                            className='mb-margin-xl'>
                            {m_loginMode ? "Switch to sign up" : "Switch to login"}
                         </button>
@@ -50,7 +67,7 @@ const AuthPage: React.FC = () => {
                                  type="password" placeholder='Password'
                               />
                               <button className='
-                                 w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-300 mb-margin-m
+                                 w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
                               '>Login</button>
                            </>
                            :
@@ -69,7 +86,7 @@ const AuthPage: React.FC = () => {
                                  type="password" placeholder='Confirm password'
                               />
                               <button className='
-                                 w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-300 mb-margin-m
+                                 w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
                               '>Sign up</button>
                            </>
                      }
@@ -95,7 +112,7 @@ const AuthPage: React.FC = () => {
                   </div>
                </form>
             </div>
-         </section>
+         </framer.section>
          <FooterSection />
       </main>
    )
