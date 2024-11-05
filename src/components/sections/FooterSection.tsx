@@ -2,7 +2,7 @@ import React from 'react'
 
 const FooterSection: React.FC = () => {
    return (
-      <footer className='flex justify-center items-center bg-background-50'>
+      <footer className='flex justify-center items-center bg-accent-50'>
          <div className='flex flex-col justify-start items-center w-full max-w-5xl text-text-950'>
 
             {/* --- FOOTER TOP --- */}

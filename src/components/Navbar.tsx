@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = props => {
          }
 
          const clamped = Math.max(0, Math.min(scrollFadeMax, window.scrollY))
-         const t = Math.min(clamped / scrollFadeMax, 0.95)
+         const t = Math.min(clamped / scrollFadeMax, 1)
          if (headerRef.current?.style) {
             headerRef.current.style.backgroundColor = `rgba(${HEADER_RGB}, ${t})`
          }
@@ -35,12 +35,10 @@ const Navbar: React.FC<NavbarProps> = props => {
    return (
       <header
          ref={headerRef}
-         style={{
-            position: props.useSticky ? "sticky" : "fixed"
-         }}
+         style={{ position: props.useSticky ? "sticky" : "fixed" }}
          className='
             top-0 left-0 right-0 z-10 flex justify-between items-center
-            h-16 pr-4 md:pr-8 text-text-950 font-medium text-xl transition-colors'
+            h-14 px-2 md:px-5 text-text-950 font-medium text-lg transition-colors duration-500'
       >
          {/* ----- COMPANY LOGO ------ */}
          <Link className='h-full w-auto' to={ROUTE_URL.HOME}>
@@ -59,7 +57,7 @@ const Navbar: React.FC<NavbarProps> = props => {
          {/* --- LARGE NAVBAR | SHOWS WHEN SCREEN EXPANDS ---- */}
          <nav className='
             hidden md:flex justify-center items-center 
-            gap-14 lg:gap-24
+            gap-11 lg:gap-20
          '>
             <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.HOME}>Home</Link>
             <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.ABOUT}>About</Link>
@@ -67,7 +65,7 @@ const Navbar: React.FC<NavbarProps> = props => {
             <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.AUTH}>Login</Link>
          </nav>
          <Link className='
-            hidden justify-center items-center bg-primary-500 px-7 h-11 rounded-lg
+            hidden justify-center items-center bg-primary-500 px-7 h-10 rounded-lg
             md:flex hover:bg-primary-600 transition-colors
          ' to={ROUTE_URL.GALLERY}>Adopt</Link>
       </header>

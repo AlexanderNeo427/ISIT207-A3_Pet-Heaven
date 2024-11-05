@@ -5,6 +5,11 @@ import login_img from "../assets/images/golden_retriever.jpg"
 import signup_img from "../assets/images/golden_retriever_2.jpg"
 import { motion as framer, useWillChange } from 'framer-motion'
 import AuthInput from '../components/AuthInput'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { firebaseAuth } from '../others/FirebaseConfig'
+import google_icon from '../assets/images/google_icon.png'
+import facebook_icon from '../assets/images/facebook_icon.png'
+import tiktok_icon from '../assets/images/tiktok_icon.png'
 
 export enum INPUT_ID {
    LOGIN_EMAIL,
@@ -39,6 +44,41 @@ const AuthPage: React.FC = () => {
       }
    }
 
+   const loginHandler = async (_: React.MouseEvent): Promise<void> => {
+      const email = m_inputData[INPUT_ID.LOGIN_EMAIL]
+      const pwd = m_inputData[INPUT_ID.LOGIN_PASSWORD]
+
+      signInWithEmailAndPassword(firebaseAuth, email, pwd)
+         .then(userCreds => {
+            console.log("Successfully login with the user: ", userCreds.user, ". Redirecting....")
+            // TODO - SetTimeout
+         })
+         .catch(err => {
+            console.log("Unable to log the user in, exited with error code: ", err.code)
+            console.log("Error message: ", err.message)
+         })
+   }
+
+   const signupHandler = async (_: React.MouseEvent): Promise<void> => {
+      const email = m_inputData[INPUT_ID.SIGNUP_EMAIL]
+      const pwd = m_inputData[INPUT_ID.SIGNUP_PASSWORD]
+      const confirmPwd = m_inputData[INPUT_ID.SIGNUP_CONFIRM_PASSWORD]
+
+      if (pwd !== confirmPwd) {
+         console.log("Passwords do not match")
+         return
+      }
+
+      createUserWithEmailAndPassword(firebaseAuth, email, pwd)
+         .then(userCreds => {
+            console.log("Successfully signed up the user: ", userCreds.user, ". Proceed to sign in")
+         })
+         .catch(err => {
+            console.log("Unable to sign up with credentials, exited with error code: ", err.code)
+            console.log("Error message: ", err.message)
+         })
+   }
+
    return (
       <main>
          <Navbar useSticky={true} />
@@ -61,7 +101,7 @@ const AuthPage: React.FC = () => {
                   className='hidden md:block bg-cover h-full w-[99rem] rounded-l-2xl'>
                </div>
 
-               <form onSubmit={e => e.preventDefault()} className='flex justify-center items-center min-w-[24rem] xl:min-w-[28rem] px-10'>
+               <form onSubmit={e => e.preventDefault()} className='flex justify-center items-center min-w-[28rem] xl:min-w-[34rem] px-10'>
                   <div className='w-full flex flex-col justify-start items-center'>
                      {
                         <button onClick={toggleClickHandler}
@@ -75,7 +115,7 @@ const AuthPage: React.FC = () => {
                               <h2 className='font-bold text-3xl mb-text-m'>LOGIN</h2>
                               <AuthInput inputID={INPUT_ID.LOGIN_EMAIL} inputType='email' placeholder='Email' inputData={m_inputData} setInputData={setInputData} />
                               <AuthInput inputID={INPUT_ID.LOGIN_PASSWORD} inputType='password' placeholder='Password' inputData={m_inputData} setInputData={setInputData} />
-                              <button className='
+                              <button onClick={loginHandler} className='
                                  w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
                               '>Login</button>
                            </>
@@ -85,7 +125,7 @@ const AuthPage: React.FC = () => {
                               <AuthInput inputID={INPUT_ID.SIGNUP_EMAIL} inputType='email' placeholder='Email' inputData={m_inputData} setInputData={setInputData} />
                               <AuthInput inputID={INPUT_ID.SIGNUP_PASSWORD} inputType='password' placeholder='Password' inputData={m_inputData} setInputData={setInputData} />
                               <AuthInput inputID={INPUT_ID.SIGNUP_CONFIRM_PASSWORD} inputType='password' inputData={m_inputData} placeholder='Confirm Password' setInputData={setInputData} />
-                              <button className='
+                              <button onClick={signupHandler} className='
                                  w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
                               '>Sign up</button>
                            </>
@@ -109,10 +149,29 @@ const AuthPage: React.FC = () => {
                         <div className='w-full h-[1px] bg-gray-400'></div>
                      </div>
 
-                     <div className='w-full flex justify-around'>
-                        <button>X</button>
-                        <button>G</button>
-                        <button>L</button>
+                     {/* --- ALTERNATIVE SIGN-INS --- */}
+                     <div className='w-full flex justify-center text-sm gap-4'>
+                        <button className='
+                           flex justify-center items-center h-11 rounded-lg bg-background-900
+                           hover:bg-background-800 transition-colors duration-200 w-32
+                        '>
+                           <img className='w-5 h-5 mr-margin-s' src={google_icon} alt="" />
+                           <span>Google</span>
+                        </button>
+                        <button className='
+                           flex justify-center items-center h-11 rounded-lg bg-background-900
+                           hover:bg-background-800 transition-colors duration-200 w-32
+                        '>
+                           <img className='w-5 h-5 mr-margin-s' src={facebook_icon} alt="" />
+                           <span>Facebook</span>
+                        </button>
+                        <button className='
+                           flex justify-center items-center h-11 rounded-lg bg-background-900
+                           hover:bg-background-800 transition-colors duration-200 w-32
+                        '>
+                           <img className='w-5 h-5 mr-margin-s' src={tiktok_icon} alt="" />
+                           <span>TikTok</span>
+                        </button>
                      </div>
                   </div>
                </form>
