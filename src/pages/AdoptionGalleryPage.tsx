@@ -22,16 +22,15 @@ const AdoptionGalleryPage: React.FC = () => {
             )
             const dogApiRes = await axios.get(
                `https://api.thedogapi.com/v1/images/search?has_breeds=1&limit=${imageCount}`, {
-               headers: {
-                  'x-api-key': import.meta.env.VITE_DOG_API_KEY
-               }
+               headers: { 'x-api-key': import.meta.env.VITE_DOG_API_KEY }
             })
+
+            console.log([...catApiRes.data, ...dogApiRes.data])
 
             const allPetData = [
                ...catApiRes.data
                   .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.CAT))
-                  .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif'))
-               ,
+                  .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif')),
                ...dogApiRes.data
                   .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.DOG))
                   .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif'))
