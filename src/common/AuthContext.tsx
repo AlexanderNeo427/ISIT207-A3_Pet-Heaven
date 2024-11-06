@@ -1,5 +1,5 @@
 import { User as FirebaseUser, onAuthStateChanged } from 'firebase/auth'
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, ReactNode, useEffect, useState } from 'react'
 import { firebaseAuth } from '../others/FirebaseConfig'
 
 interface AuthContextType {
@@ -8,7 +8,7 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType | null>(null)
 
-const AuthContextProvider: React.FC<{ children: React.ReactNode }> = props => {
+const AuthContextProvider: React.FC<{ children: ReactNode }> = props => {
    const [m_authState, setAuthState] = useState<AuthContextType>({ firebaseUser: null })
 
    useEffect(() => {

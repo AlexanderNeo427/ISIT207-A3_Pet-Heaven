@@ -1,6 +1,7 @@
 export const ROUTE_URL = {
     HOME: "/",
     GALLERY: "/adoption_gallery",
+    PET_DETAIL: "/pet_detail/:pet_type/:pet_id",
     ABOUT: "/about",
     CONTACT_US: "/contact_us",
     AUTH: "/auth",

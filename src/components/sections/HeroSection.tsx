@@ -41,8 +41,8 @@ const HeroSection: React.FC = () => {
                   '>Adopt a Pet</button>  
                   <button className='
                      border-2 border-primary-500 px-5 h-full rounded-lg
-                     hover:bg-primary-500 hover:text-text-50
-                  '>Learn More</button>
+                     hover:bg-primary-600 hover:text-text-950
+                  '>Donate</button>
                </div>
             </div>
          </div>
