@@ -43,7 +43,7 @@ const AdoptionGalleryPage: React.FC = () => {
             console.error("Error fetching from API: ", err.message)
          }
       }
-      fetchPetApiData(10)
+      fetchPetApiData(20)
    }, [])
 
    const petOptions = [
