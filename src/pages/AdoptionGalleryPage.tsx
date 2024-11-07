@@ -25,7 +25,8 @@ const AdoptionGalleryPage: React.FC = () => {
                headers: { 'x-api-key': import.meta.env.VITE_DOG_API_KEY }
             })
 
-            console.log([...catApiRes.data, ...dogApiRes.data])
+            // DEBUG
+            // console.log([...catApiRes.data, ...dogApiRes.data])
 
             const allPetData = [
                ...catApiRes.data
