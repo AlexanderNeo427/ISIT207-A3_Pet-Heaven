@@ -113,8 +113,5 @@ export const Utils = {
             arr[i] = arr[j];
             arr[j] = temp;
         }
-    },
-    makePetDetailURL(petApiType: PET_API_TYPE, id: string | number): string {
-        return ""
     }
 }

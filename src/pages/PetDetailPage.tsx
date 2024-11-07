@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import FooterSection from '../components/sections/FooterSection'
-import { PET_API_TYPE, PetApiData, Utils } from '../others/Globals'
-import { AppContext } from '../common/AppContext'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { PET_API_TYPE, PetApiData } from '../others/Globals'
+import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 
 const PetDetailPage: React.FC = () => {
    const [m_petApiData, setPetApiData] = useState<PetApiData>()
-
    const m_searchParams = useSearchParams()[0]
    
    useEffect(() => {
@@ -16,9 +14,13 @@ const PetDetailPage: React.FC = () => {
       const pet_id = m_searchParams.get('pet_id')
       const breed_id = m_searchParams.get('breed_id')
 
+      console.log("PetDetailPage - Pet Type: ", pet_type)
+      console.log("PetDetailPage - Pet ID: ", pet_id)
+      console.log("PetDetailPage - Breed ID: ", breed_id)
+
       const imgEndpointURL = pet_type === "dog" ? 
-         `https://api.thedogapi.com/v1/images/search?id=${pet_id}` :
-         `https://api.thecatapi.com/v1/images/search?id=${pet_id}`  
+         `https://api.thedogapi.com/v1/images/${pet_id}` :
+         `https://api.thecatapi.com/v1/images/${pet_id}`  
       
       const breedEndpointURL = pet_type === 'dog' ? 
          `https://api.thedogapi.com/v1/breeds/${breed_id}` :
@@ -41,7 +43,7 @@ const PetDetailPage: React.FC = () => {
                }
             })
 
-            const imgData = imgRes.data[0]
+            const imgData = imgRes.data
             const breedData = breedRes.data
             const petApiData = new PetApiData(
                imgData.id, imgData.url, breedData,
@@ -63,11 +65,15 @@ const PetDetailPage: React.FC = () => {
 
    return (
       <main>
-         <Navbar />
-         <section className='min-h-[30rem] text-center'>
-            {/* You are on the pet detail page. Pet ID: {} */}
-         </section>
-         <FooterSection />
+         <Navbar />{
+            m_petApiData && 
+            <section className='min-h-[30rem] text-center'>
+               <img src={m_petApiData.imgURL} alt="" />
+               <div>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi fuga officiis eum ipsam eos voluptatum, cupiditate aperiam atque sequi perspiciatis corporis, quae, vero eius ipsa cumque provident pariatur deleniti facilis!
+               </div>
+            </section>
+         }<FooterSection />
       </main>
    )
 }

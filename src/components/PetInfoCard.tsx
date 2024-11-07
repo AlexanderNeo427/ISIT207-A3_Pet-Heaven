@@ -9,7 +9,10 @@ const PetInfoCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
 
    const cardClickHandler = () => {
       const petType = petApiData.apiType === PET_API_TYPE.DOG ? "dog" : "cat"
-      navTo(`/pet_detail?pet_type=${petType}&pet_id=${petApiData.id}&breed_id=${petApiData.breedData?.breed_id}`)
+      const destURL = `/pet_detail?pet_type=${petType}&pet_id=${petApiData.id}&breed_id=${petApiData.breedData?.breed_id}`
+      console.log("PetInfoCard - destURL: ", destURL)
+
+      navTo(destURL)
    }
 
    return (
