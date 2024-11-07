@@ -11,12 +11,14 @@ export const ROUTE_URL = {
 export enum PET_API_TYPE { DOG, CAT }
 
 export class BreedData { 
+    breed_id: string
     breed: string
     lifespan: string
     weight: string
     temperaments: string[]
 
     constructor(breedsObj: any) {
+        this.breed_id = breedsObj.id
         this.breed = breedsObj.name
         this.lifespan = breedsObj.life_span
         this.weight = breedsObj.weight.metric
@@ -111,5 +113,8 @@ export const Utils = {
             arr[i] = arr[j];
             arr[j] = temp;
         }
+    },
+    makePetDetailURL(petApiType: PET_API_TYPE, id: string | number): string {
+        return ""
     }
 }

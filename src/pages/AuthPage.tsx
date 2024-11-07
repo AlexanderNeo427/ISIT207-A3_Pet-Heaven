@@ -86,15 +86,17 @@ const AuthPage: React.FC = () => {
             style={{ willChange }}
             variants={{
                default: { rotateY: 0 },
-               rotated: { rotateY: 90 }
+               rotated: { rotateY: 89 }
             }}
             animate={m_isAnimating ? 'rotated' : 'default'}
             transition={{ duration: ROTATION_TIME_MS / 1000 }}
             className='flex justify-center items-center'>
-            <div className='
-               flex justify-between items-center rounded-2xl 
-               bg-white shadow-xl my-margin-2xl h-[36rem]
-               md:max-w-3xl xl:max-w-4xl xl:h-[42rem]
+            <div
+               style={{ perspective: '300px', transformStyle: 'preserve-3d' }}
+               className='
+                  flex justify-between items-center rounded-2xl 
+                  bg-white shadow-xl my-margin-2xl h-[36rem]
+                  md:max-w-3xl xl:max-w-4xl xl:h-[42rem]
             '>
                <div
                   style={{ backgroundImage: `url(${m_loginMode ? login_img : signup_img})` }}
