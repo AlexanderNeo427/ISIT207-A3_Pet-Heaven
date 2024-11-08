@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 
 export interface DropdownOption {
    optionName: string
@@ -26,20 +26,33 @@ const Dropdown: React.FC<DropdownProps> = props => {
 
    return (
       <div className='relative'>
-         <span onClick={() => setIsOpen(isOpen => !isOpen)} className=''>{props.label}</span>
-         <div style={{ scale: m_isOpen ? "1" : "0" }} className='absolute'>{
-            props.options.map((option, idx) => {
-               return (
-                  <div key={idx} className=''>
-                     <input
-                        type="checkbox" checked={option.isChecked}
-                        onChange={evt => onChangeHandler(evt, option.optionName)}
-                     />
-                     <span>{option.optionName}</span>
-                  </div>
-               )
-            })
-         }</div>
+         <button
+            onClick={() => setIsOpen(isOpen => !isOpen)}
+            className='
+               px-4 h-10 rounded-lg text-lg text-text-300
+               outline outline-1 outline-gray-300 shadow-lg bg-white
+               hover:outline-black transition-all duration-200
+         '>{props.label}</button>
+         <div
+            style={{ scale: m_isOpen ? "1" : "0" }}
+            className='
+               absolute outline outline-1 outline-gray-300 z-10
+               min-w-56 bg-white mt-margin-xxs rounded-lg shadow-lg 
+               pt-margin-l pl-margin-l pb-margin-m pr-margin-l
+         '>{
+               props.options.map((option, idx) => {
+                  return (
+                     <div key={idx} className='mb-margin-m flex items-center'>
+                        <input
+                           className='mr-margin-xs w-6 h-6'
+                           type="checkbox" checked={option.isChecked}
+                           onChange={evt => onChangeHandler(evt, option.optionName)}
+                        />
+                        <span>{option.optionName}</span>
+                     </div>
+                  )
+               })
+            }</div>
       </div>
    )
 }

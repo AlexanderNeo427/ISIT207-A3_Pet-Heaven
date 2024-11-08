@@ -12,9 +12,24 @@ const AdoptionGalleryPage: React.FC = () => {
 
    const [m_searchInput, setSearchInput] = useState<string>("")
    const [m_petTypeDropdown, setPetTypeDropdown] = useState<DropdownOption[]>([])
+   const [m_agesDropdown, setAgesDropdown] = useState<DropdownOption[]>([])
+   const [m_sizesDropdown, setSizesDropdown] = useState<DropdownOption[]>([])
+
 
    useEffect(() => {
       setPetTypeDropdown([
+         { optionName: "Option 1", isChecked: true },
+         { optionName: "option 2", isChecked: true },
+         { optionName: "Op 3", isChecked: true },
+         { optionName: "Op4", isChecked: true },
+      ])
+      setAgesDropdown([
+         { optionName: "Option 1", isChecked: true },
+         { optionName: "option 2", isChecked: true },
+         { optionName: "Op 3", isChecked: true },
+         { optionName: "Op4", isChecked: true },
+      ])
+      setSizesDropdown([
          { optionName: "Option 1", isChecked: true },
          { optionName: "option 2", isChecked: true },
          { optionName: "Op 3", isChecked: true },
@@ -54,11 +69,29 @@ const AdoptionGalleryPage: React.FC = () => {
                   {/* <Select options={petOptions} /> */}
                </div>
 
-               <Dropdown
-                  label='My First Dropdown'
-                  options={m_petTypeDropdown}
-                  setOptions={setPetTypeDropdown}
-               />
+               <div className='mr-margin-m'>
+                  <Dropdown
+                     label='Gender'
+                     options={m_petTypeDropdown}
+                     setOptions={setPetTypeDropdown}
+                  />
+               </div>
+
+               <div className='mr-margin-m'>
+                  <Dropdown
+                     label='Sizes'
+                     options={m_sizesDropdown}
+                     setOptions={setSizesDropdown}
+                  />
+               </div>
+
+               <div className='mr-margin-m'>
+                  <Dropdown
+                     label='Ages'
+                     options={m_agesDropdown}
+                     setOptions={setAgesDropdown}
+                  />
+               </div>
 
                {/* ---- SEARCH BAR ----- */}
                <div className='flex justify-start items-center bg-gray-200 w-48 h-11 px-3 py-2 rounded-lg'>

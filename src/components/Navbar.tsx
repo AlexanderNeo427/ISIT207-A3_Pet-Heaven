@@ -37,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = props => {
          ref={headerRef}
          style={{ position: props.useSticky ? "sticky" : "fixed" }}
          className='
-            top-0 left-0 right-0 z-10 flex justify-between items-center
+            top-0 left-0 right-0 z-20 flex justify-between items-center
             h-14 px-2 md:px-5 text-text-950 font-medium text-lg transition-colors duration-500'
       >
          {/* ----- COMPANY LOGO ------ */}
