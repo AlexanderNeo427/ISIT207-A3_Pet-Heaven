@@ -4,38 +4,61 @@ import search_icon from '../assets/SVG/search.svg'
 import Navbar from '../components/Navbar'
 import PetInfoCard from '../components/PetInfoCard'
 import FooterSection from '../components/sections/FooterSection'
-import Select from 'react-select'
+import Dropdown, { DropdownOption } from '../components/Dropdown'
 
 const AdoptionGalleryPage: React.FC = () => {
+   const [m_isLoading, setIsLoading] = useState<boolean>(true)
    const [m_petData, setPetData] = useState<PetApiData[]>([])
+
    const [m_searchInput, setSearchInput] = useState<string>("")
+   const [m_petTypeDropdown, setPetTypeDropdown] = useState<DropdownOption[]>([])
 
    useEffect(() => {
-      const fetchPetApiData = async (): Promise<void> => {
-         const allPetData = await Utils.getBatchPetAPIData(10)
-         Utils.durstenfeldShuffle(allPetData)
-         setPetData(allPetData)
-      }
-      fetchPetApiData()
+      setPetTypeDropdown([
+         { optionName: "Option 1", isChecked: true },
+         { optionName: "option 2", isChecked: true },
+         { optionName: "Op 3", isChecked: true },
+         { optionName: "Op4", isChecked: true },
+      ])
+
+      // const fetchPetApiData = async (): Promise<void> => {
+      //    const allPetData = await Utils.getBatchPetAPIData(10)
+      //    Utils.durstenfeldShuffle(allPetData)
+      //    setPetData(allPetData)
+      //    setIsLoading(false)
+      // }
+      // fetchPetApiData()
    }, [])
 
-   const petOptions = [
-      { value: 'dog', label: 'Cat' },
-      { value: 'cat', label: 'Dog' }
-   ]
+   const getAnimatedCards = (): JSX.Element[] => {
+      const arr = Array.from({ length: 10 })
+      return arr.map((_, idx) => {
+         return (
+            <div
+               key={idx}
+               style={{ height: `${Utils.randInt(16, 23)}rem` }}
+               className='w-full min-w-80 bg-gray-300 animate-pulse rounded-lg shadow-lg mb-4'>
+            </div>
+         )
+      })
+   }
 
    return (
       <main>
          <Navbar useSticky={true} />
          <section className='flex justify-center items-center py-margin-l px-margin-s'>
             <div className='flex'>
+
                {/* ---- DROPDOWN CONTAINER ---- */}
                <div className='mr-margin-l'>
-                  <Select
-                     defaultValue={[petOptions[0], petOptions[1]]}
-                     options={petOptions} isMulti={true}
-                  />
+                  {/* <Select options={petOptions} /> */}
                </div>
+
+               <Dropdown
+                  label='My First Dropdown'
+                  options={m_petTypeDropdown}
+                  setOptions={setPetTypeDropdown}
+               />
 
                {/* ---- SEARCH BAR ----- */}
                <div className='flex justify-start items-center bg-gray-200 w-48 h-11 px-3 py-2 rounded-lg'>
@@ -51,9 +74,8 @@ const AdoptionGalleryPage: React.FC = () => {
 
          <section className='min-h-96 flex justify-center items-center'>
             <div className='max-w-6xl mx-margin-s columns-2 md:columns-3 2xl:columns-4 my-margin-l'>{
-               m_petData.map(data => {
-                  return <PetInfoCard key={data.id} petApiData={data} />
-               })
+               m_isLoading ? getAnimatedCards() :
+                  m_petData.map(data => <PetInfoCard key={data.id} petApiData={data} />)
             }</div>
          </section>
          <FooterSection />
