@@ -2,6 +2,7 @@ export const ROUTE_URL = {
     HOME: "/",
     GALLERY: "/adoption_gallery",
     PET_DETAIL: "/pet_detail",
+    CHECKOUT: "/checkout",
     ABOUT: "/about",
     CONTACT_US: "/contact_us",
     AUTH: "/auth",
@@ -10,7 +11,7 @@ export const ROUTE_URL = {
 
 export enum PET_API_TYPE { DOG, CAT }
 
-export class BreedData { 
+export class BreedData {
     breed_id: string
     breed: string
     lifespan: string
@@ -107,9 +108,9 @@ export const Utils = {
         )
     },
     durstenfeldShuffle(arr: any[]): void {
-        for (var i = arr.length - 1; i >= 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = arr[i];
+        for (let i = arr.length - 1; i >= 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
         }

@@ -14,7 +14,7 @@ const AuthContextProvider: React.FC<{ children: ReactNode }> = props => {
    useEffect(() => {
       const unsubscribe = onAuthStateChanged(firebaseAuth, newFirebaserUser => {
          setAuthState({ firebaseUser: newFirebaserUser })
-         console.log("AuthContextProvider - firebaserUser: ", newFirebaserUser)
+         // console.log("AuthContextProvider - firebaserUser: ", newFirebaserUser)
       })
       return () => unsubscribe()
    }, [])
