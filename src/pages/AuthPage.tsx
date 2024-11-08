@@ -105,43 +105,37 @@ const AuthPage: React.FC = () => {
 
                <form onSubmit={e => e.preventDefault()} className='flex justify-center items-center min-w-[28rem] xl:min-w-[34rem] px-10'>
                   <div className='w-full flex flex-col justify-start items-center'>
-                     {
-                        <button onClick={toggleClickHandler}
-                           className='mb-margin-xl'>
-                           {m_loginMode ? "Switch to sign up" : "Switch to login"}
-                        </button>
-                     }
-                     {
-                        m_loginMode ?
-                           <>
-                              <h2 className='font-bold text-3xl mb-text-m'>LOGIN</h2>
-                              <AuthInput inputID={INPUT_ID.LOGIN_EMAIL} inputType='email' placeholder='Email' inputData={m_inputData} setInputData={setInputData} />
-                              <AuthInput inputID={INPUT_ID.LOGIN_PASSWORD} inputType='password' placeholder='Password' inputData={m_inputData} setInputData={setInputData} />
-                              <button onClick={loginHandler} className='
-                                 w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
-                              '>Login</button>
-                           </>
-                           :
-                           <>
-                              <h2 className='font-bold text-3xl mb-text-m'>SIGN UP</h2>
-                              <AuthInput inputID={INPUT_ID.SIGNUP_EMAIL} inputType='email' placeholder='Email' inputData={m_inputData} setInputData={setInputData} />
-                              <AuthInput inputID={INPUT_ID.SIGNUP_PASSWORD} inputType='password' placeholder='Password' inputData={m_inputData} setInputData={setInputData} />
-                              <AuthInput inputID={INPUT_ID.SIGNUP_CONFIRM_PASSWORD} inputType='password' inputData={m_inputData} placeholder='Confirm Password' setInputData={setInputData} />
-                              <button onClick={signupHandler} className='
-                                 w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
-                              '>Sign up</button>
-                           </>
-                     }
-                     {
-                        m_loginMode &&
+                     {<button onClick={toggleClickHandler}
+                        className='mb-margin-xl'>
+                        {m_loginMode ? "Switch to sign up" : "Switch to login"}
+                     </button>}
+                     {m_loginMode ?
+                        <>
+                           <h2 className='font-bold text-3xl mb-text-m'>LOGIN</h2>
+                           <AuthInput inputID={INPUT_ID.LOGIN_EMAIL} inputType='email' placeholder='Email' inputData={m_inputData} setInputData={setInputData} />
+                           <AuthInput inputID={INPUT_ID.LOGIN_PASSWORD} inputType='password' placeholder='Password' inputData={m_inputData} setInputData={setInputData} />
+                           <button onClick={loginHandler} className='
+                              w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
+                           '>Login</button>
+                        </>
+                        :
+                        <>
+                           <h2 className='font-bold text-3xl mb-text-m'>SIGN UP</h2>
+                           <AuthInput inputID={INPUT_ID.SIGNUP_EMAIL} inputType='email' placeholder='Email' inputData={m_inputData} setInputData={setInputData} />
+                           <AuthInput inputID={INPUT_ID.SIGNUP_PASSWORD} inputType='password' placeholder='Password' inputData={m_inputData} setInputData={setInputData} />
+                           <AuthInput inputID={INPUT_ID.SIGNUP_CONFIRM_PASSWORD} inputType='password' inputData={m_inputData} placeholder='Confirm Password' setInputData={setInputData} />
+                           <button onClick={signupHandler} className='
+                              w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
+                           '>Sign up</button>
+                        </>}
+                     {m_loginMode &&
                         <div className='flex justify-between w-full mb-margin-s text-sm'>
                            <div className='flex justify-center'>
                               <input type="checkbox" name="" id="" />
                               <span className='ml-margin-xxs'>Remember Me</span>
                            </div>
                            <a href="">Forgot your password?</a>
-                        </div>
-                     }
+                        </div>}
 
                      <div className='w-full flex justify-between items-center h-5 mb-margin-l text-gray-400'>
                         <div className='w-full h-[1px] bg-gray-400'></div>

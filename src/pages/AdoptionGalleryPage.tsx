@@ -1,6 +1,5 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { PET_API_TYPE, PetApiData, Utils } from '../others/Globals'
+import { PetApiData, Utils } from '../others/Globals'
 import search_icon from '../assets/SVG/search.svg'
 import Navbar from '../components/Navbar'
 import PetInfoCard from '../components/PetInfoCard'
@@ -9,41 +8,15 @@ import Select from 'react-select'
 
 const AdoptionGalleryPage: React.FC = () => {
    const [m_petData, setPetData] = useState<PetApiData[]>([])
+   const [m_searchInput, setSearchInput] = useState<string>("")
 
    useEffect(() => {
-      const fetchPetApiData = async (fetchCount: number): Promise<void> => {
-         const imageCount = Math.ceil(fetchCount / 2)
-
-         try {
-            const catApiRes = await axios.get(
-               `https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=${imageCount}`, {
-               headers: { 'x-api-key': import.meta.env.VITE_CAT_API_KEY }
-            }
-            )
-            const dogApiRes = await axios.get(
-               `https://api.thedogapi.com/v1/images/search?has_breeds=1&limit=${imageCount}`, {
-               headers: { 'x-api-key': import.meta.env.VITE_DOG_API_KEY }
-            })
-
-            // DEBUG
-            // console.log([...catApiRes.data, ...dogApiRes.data])
-
-            const allPetData = [
-               ...catApiRes.data
-                  .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.CAT))
-                  .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif')),
-               ...dogApiRes.data
-                  .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.DOG))
-                  .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif'))
-            ]
-            Utils.durstenfeldShuffle(allPetData)
-            setPetData(allPetData)
-         }
-         catch (err: any) {
-            console.error("Error fetching from API: ", err.message)
-         }
+      const fetchPetApiData = async (): Promise<void> => {
+         const allPetData = await Utils.getBatchPetAPIData(10)
+         Utils.durstenfeldShuffle(allPetData)
+         setPetData(allPetData)
       }
-      fetchPetApiData(20)
+      fetchPetApiData()
    }, [])
 
    const petOptions = [
@@ -58,8 +31,8 @@ const AdoptionGalleryPage: React.FC = () => {
             <div className='flex'>
                {/* ---- DROPDOWN CONTAINER ---- */}
                <div className='mr-margin-l'>
-                  <Select 
-                     defaultValue={[petOptions[0], petOptions[1]]} 
+                  <Select
+                     defaultValue={[petOptions[0], petOptions[1]]}
                      options={petOptions} isMulti={true}
                   />
                </div>
@@ -67,7 +40,10 @@ const AdoptionGalleryPage: React.FC = () => {
                {/* ---- SEARCH BAR ----- */}
                <div className='flex justify-start items-center bg-gray-200 w-48 h-11 px-3 py-2 rounded-lg'>
                   <img className='w-7 h-7 mr-margin-xs' src={search_icon} alt="" />
-                  <input className='bg-transparent w-full focus:outline-none' type="text" />
+                  <input
+                     value={m_searchInput} onChange={evt => setSearchInput(evt.target.value)}
+                     className='bg-transparent w-full focus:outline-none' type="text"
+                  />
                </div>
             </div>
 

@@ -3,65 +3,50 @@ import Navbar from '../components/Navbar'
 import FooterSection from '../components/sections/FooterSection'
 import { CatBreedData, DogBreedData, PET_API_TYPE, PetApiData, ROUTE_URL, Utils } from '../others/Globals'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import calendar_svg from '../assets/SVG/calendar.svg'
-import ruler_svg from '../assets/SVG/ruler.svg'
-import weighing_scale_svg from '../assets/SVG/weighing_scale.svg'
-import paw_svg from '../assets/SVG/paw.svg'
-import axios from 'axios'
+import MorePetsCard from '../components/MorePetsCard'
+
 import LoadingScreen from '../components/LoadingScreen'
 import AdditionalDetailCard from '../components/AdditionalDetailCard'
 import { LoremIpsum } from 'lorem-ipsum'
 
+import calendar_svg from '../assets/SVG/calendar.svg'
+import ruler_svg from '../assets/SVG/ruler.svg'
+import weighing_scale_svg from '../assets/SVG/weighing_scale.svg'
+import paw_svg from '../assets/SVG/paw.svg'
+import heart_svg from '../assets/SVG/heart.svg'
+import child_friendly_svg from '../assets/SVG/child_friendly.svg'
+import rabbit_svg from '../assets/SVG/rabbit.svg'
+import verified_user_svg from '../assets/SVG/verified_user.svg'
+import male_svg from '../assets/SVG/male.svg'
+import female_svg from '../assets/SVG/female.svg'
+
 const PetDetailPage: React.FC = () => {
    const [m_isLoading, setIsLoading] = useState<boolean>(true)
    const [m_petApiData, setPetApiData] = useState<PetApiData>()
+   const [m_morePets, setMorePets] = useState<PetApiData[]>([])
    const m_searchParams = useSearchParams()[0]
    const m_navTo = useNavigate()
+
+   const SVGs = [
+      calendar_svg, ruler_svg, weighing_scale_svg, paw_svg, heart_svg,
+      child_friendly_svg, rabbit_svg, verified_user_svg
+   ]
 
    useEffect(() => {
       const pet_type = m_searchParams.get('pet_type')
       const pet_id = m_searchParams.get('pet_id')
       const breed_id = m_searchParams.get('breed_id')
 
-      const imgEndpointURL = pet_type === "dog" ?
-         `https://api.thedogapi.com/v1/images/${pet_id}` :
-         `https://api.thecatapi.com/v1/images/${pet_id}`
+      const fetchRequiredPetApiData = async (): Promise<void> => {
+         const petApiType = pet_type === "dog" ? PET_API_TYPE.DOG : PET_API_TYPE.CAT
+         const data = await Utils.getOnePetApiData(petApiType, String(pet_id), String(breed_id))
+         setPetApiData(data)
 
-      const breedEndpointURL = pet_type === 'dog' ?
-         `https://api.thedogapi.com/v1/breeds/${breed_id}` :
-         `https://api.thecatapi.com/v1/breeds/${breed_id}`
-
-      const fetchPetApiData = async (): Promise<void> => {
-         try {
-            const imgRes = await axios.get(imgEndpointURL, {
-               headers: {
-                  'x-api-key': pet_type === 'dog' ?
-                     import.meta.env.VITE_DOG_API_KEY :
-                     import.meta.env.VITE_CAT_API_KEY
-               }
-            })
-            const breedRes = await axios.get(breedEndpointURL, {
-               headers: {
-                  'x-api-key': pet_type === 'dog' ?
-                     import.meta.env.VITE_DOG_API_KEY :
-                     import.meta.env.VITE_CAT_API_KEY
-               }
-            })
-
-            const imgData = imgRes.data
-            const breedData = breedRes.data
-            const petApiData = new PetApiData(
-               imgData.id, imgData.url, breedData, imgData.height, imgData.width,
-               pet_type === "dog" ? PET_API_TYPE.DOG : PET_API_TYPE.CAT
-            )
-            setPetApiData(petApiData)
-            setIsLoading(false)
-         }
-         catch (err: any) {
-            console.log("Error fetching from Pet API: ", err.message)
-         }
+         const morePets = await Utils.getBatchPetAPIData(4)
+         setMorePets(morePets)
+         setIsLoading(false)
       }
-      fetchPetApiData()
+      fetchRequiredPetApiData()
    }, [])
 
    interface PetAttribute {
@@ -70,27 +55,8 @@ const PetDetailPage: React.FC = () => {
       info: string
    }
 
-   // const formatTemperaments = (temperaments: string[]): string => {
-   //    const MAX_LENGTH = 30
-   //    let displayStr = ""
-   //
-   //    for (let i = 0; i < temperaments.length; i++) {
-   //       const newStr = displayStr + temperaments[i]
-   //       if (newStr.length > MAX_LENGTH) {
-   //          displayStr.padEnd(MAX_LENGTH, ".")
-   //          console.log(displayStr)
-   //          return displayStr
-   //       }
-   //       displayStr = newStr
-   //       if (i < temperaments.length - 1) {
-   //          displayStr += ", "
-   //       }
-   //    }
-   //    console.log(displayStr)
-   //    return displayStr
-   // }
-
    const getAdditionalInfo = (petApiData: PetApiData): PetAttribute[] => {
+      const isMale = Utils.randFloat(0, 100) <= 50
 
       switch (petApiData.apiType) {
          case PET_API_TYPE.DOG:
@@ -100,13 +66,15 @@ const PetDetailPage: React.FC = () => {
                { attribute: "Lifespan", imgURL: calendar_svg, info: dogBreedData.lifespan },
                { attribute: "Height", imgURL: ruler_svg, info: dogBreedData.height + " cm" },
                { attribute: "Weight", imgURL: weighing_scale_svg, info: dogBreedData.weight + " kg" },
+               { attribute: "Gender", imgURL: isMale ? male_svg : female_svg, info: isMale ? "Male" : "Female" }
             ]
          case PET_API_TYPE.CAT:
             const catBreedData = petApiData.breedData as CatBreedData
             return [
                { attribute: "Pet Type", imgURL: paw_svg, info: "Cat" },
                { attribute: "Lifespan", imgURL: calendar_svg, info: catBreedData.lifespan + " years" },
-               { attribute: "Weight", imgURL: weighing_scale_svg, info: catBreedData.weight + " kg" }
+               { attribute: "Weight", imgURL: weighing_scale_svg, info: catBreedData.weight + " kg" },
+               { attribute: "Gender", imgURL: isMale ? male_svg : female_svg, info: isMale ? "Male" : "Female" }
             ]
          default:
             return []
@@ -147,35 +115,32 @@ const PetDetailPage: React.FC = () => {
                               `${(m_petApiData.breedData as CatBreedData).description}`
                         }</p>
 
-                        {
-                           (() => {
-                              const numParagraphs = Utils.randInt(1, 4)
-                              for (let i = 0; i < numParagraphs; i++) {
-                                 return (
-                                    <p className='text-left mb-margin-l text-lg'>{
-                                       new LoremIpsum().generateParagraphs(Utils.randInt(1, 3))
-                                    }</p>
-                                 )
-                              }
-                              return <></>
-                           })() 
-                        }
+                        {(() => {
+                           const numParagraphs = Utils.randInt(1, 4)
+                           for (let i = 0; i < numParagraphs; i++) {
+                              return (
+                                 <p className='text-left mb-margin-l text-lg'>{
+                                    new LoremIpsum().generateParagraphs(Utils.randInt(1, 3))
+                                 }</p>
+                              )
+                           }
+                        })()}
+
                         <p className='text-left mb-margin-l text-lg'>{
                            new LoremIpsum({
                               sentencesPerParagraph: { min: 2, max: 5 },
-                              wordsPerSentence: { min: 4, max: 16 }
+                              wordsPerSentence: { min: 4, max: 14 }
                            }).generateParagraphs(Utils.randInt(1, 3))
                         }</p>
 
                         {/* ---- PET ATTRIBUTES/INFO ----- */}
                         <div className=''>{
-                           getAdditionalInfo(m_petApiData).map((petAttrib, idx) => {
+                           m_petApiData.breedData?.temperaments.map((temperament, idx) => {
                               return (
                                  <div key={idx} className='flex justify-start items-center mb-margin-m'>
-                                    <img className='w-7 mr-margin-s' src={petAttrib.imgURL} alt="" />
-                                    <span className='mr-text-xxs'><strong>{petAttrib.attribute}</strong></span>
-                                    <span className='mr-margin-xs'><strong>•</strong></span>
-                                    <span className='text-left font-medium text-text-200'>{petAttrib.info}</span>
+                                    <img className='w-7 mr-margin-s' src={SVGs[Utils.randInt(0, SVGs.length - 1)]} alt="" />
+                                    {/* <span className='mr-margin-xs'><strong>•</strong></span> */}
+                                    <span className='text-left font-medium text-text-200'>{temperament}</span>
                                  </div>
                               )
                            })
@@ -209,7 +174,9 @@ const PetDetailPage: React.FC = () => {
                      h-60 w-full md:max-w-96 text-center text-text-50 bg-white px-8 mb-margin-l
                   '>
                         <span className='text-xl font-medium mb-margin-m'>Adoption Fee</span>
-                        <span className='text-3xl font-semibold mb-margin-xs'>$150.0</span>
+                        <span className='text-3xl font-semibold mb-margin-xs'>
+                           ${Utils.randFloat(100, 300).toFixed(2)}
+                        </span>
                         <span className='text-sm font-light mb-margin-m'>Give a pet a home</span>
                         <button onClick={() => { m_navTo(ROUTE_URL.CHECKOUT) }} className='
                         text-text-950 font-semibold bg-accent-500 text-lg
@@ -227,17 +194,11 @@ const PetDetailPage: React.FC = () => {
                   {/* ---- VIEW OTHER ANIMALS ----- */}
                   <div className='mb-margin-l'>
                      <h2 className='text-left text-2xl font-medium mb-text-xs'>View more pets!</h2>
-                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                        <div className='w-full min-h-52 bg-white rounded-lg shadow-lg'></div>
-                     </div>
+                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>{
+                        m_morePets.map((petApiData, idx) => {
+                           return <MorePetsCard key={idx} petApiData={petApiData} />
+                        })
+                     }</div>
                   </div>
                </div>
             </section>

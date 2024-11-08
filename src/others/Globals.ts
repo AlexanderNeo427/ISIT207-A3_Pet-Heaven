@@ -1,3 +1,5 @@
+import axios from "axios"
+
 export const ROUTE_URL = {
     HOME: "/",
     GALLERY: "/adoption_gallery",
@@ -6,7 +8,8 @@ export const ROUTE_URL = {
     ABOUT: "/about",
     CONTACT_US: "/contact_us",
     AUTH: "/auth",
-    OUR_HISTORY: "/our_history"
+    OUR_HISTORY: "/our_history",
+    RECEIPT: "/receipt",
 }
 
 export enum PET_API_TYPE { DOG, CAT }
@@ -64,14 +67,10 @@ export class PetApiData {
         this.apiType = apiType
 
         if (apiType === PET_API_TYPE.CAT) {
-            // console.log("PetApiData ctor() - Creating catBreedData from breedData: ", breedData)
             this.breedData = new CatBreedData(breedData)
-            // console.log("PetApiData ctor() - Newly created catBreedData: ", this.breedData)
         }
         else if (apiType === PET_API_TYPE.DOG) {
-            // console.log("PetApiData ctor() - Creating dogBreedData from breedData: ", breedData)
             this.breedData = new DogBreedData(breedData)
-            // console.log("PetApiData ctor() - Newly created dogBreedData: ", this.breedData)
         }
     }
 }
@@ -113,6 +112,66 @@ export const Utils = {
             const temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
+        }
+    },
+    async getBatchPetAPIData(count: number): Promise<PetApiData[]> {
+        const imageCount = Math.ceil(count / 2)
+        try {
+            const catApiRes = await axios.get(
+                `https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=${imageCount}`, {
+                headers: { 'x-api-key': import.meta.env.VITE_CAT_API_KEY }
+            })
+            const dogApiRes = await axios.get(
+                `https://api.thedogapi.com/v1/images/search?has_breeds=1&limit=${imageCount}`, {
+                headers: { 'x-api-key': import.meta.env.VITE_DOG_API_KEY }
+            })
+            return [
+                ...catApiRes.data
+                    .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.CAT))
+                    .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif')),
+                ...dogApiRes.data
+                    .map((obj: any) => Utils.convertToPetApiData(obj, PET_API_TYPE.DOG))
+                    .filter((petData: PetApiData) => !petData.imgURL.endsWith('.gif'))
+            ]
+        }
+        catch (err: any) {
+            console.error("Error fetching from API: ", err.message)
+        }
+        return []
+    },
+    async getOnePetApiData(petApiType: PET_API_TYPE, petID: string | number, breedID: string): Promise<PetApiData> {
+        const imgEndpointURL = petApiType === PET_API_TYPE.DOG ?
+            `https://api.thedogapi.com/v1/images/${petID}` :
+            `https://api.thecatapi.com/v1/images/${petID}`
+
+        const breedEndpointURL = petApiType === PET_API_TYPE.DOG ?
+            `https://api.thedogapi.com/v1/breeds/${breedID}` :
+            `https://api.thecatapi.com/v1/breeds/${breedID}`
+
+        try {
+            const imgRes = await axios.get(imgEndpointURL, {
+                headers: {
+                    'x-api-key': petApiType === PET_API_TYPE.DOG ?
+                        import.meta.env.VITE_DOG_API_KEY :
+                        import.meta.env.VITE_CAT_API_KEY
+                }
+            })
+            const breedRes = await axios.get(breedEndpointURL, {
+                headers: {
+                    'x-api-key': petApiType === PET_API_TYPE.DOG ?
+                        import.meta.env.VITE_DOG_API_KEY :
+                        import.meta.env.VITE_CAT_API_KEY
+                }
+            })
+            const imgData = imgRes.data
+            const breedData = breedRes.data
+            return new PetApiData(
+                imgData.id, imgData.url, breedData, imgData.height, imgData.width, petApiType
+            )
+        }
+        catch (err: any) {
+            console.log("Error fetching from Pet API: ", err.message)
+            return {} as PetApiData
         }
     }
 }
