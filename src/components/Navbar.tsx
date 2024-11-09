@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ROUTE_URL } from '../others/Globals'
 import company_logo from '../assets/images/company_logo.png'
+import { AuthContext } from '../common/AuthContext'
+import AccountDropdown from './AccountDropdown'
 
 interface NavbarProps {
    useSticky?: boolean
@@ -10,6 +12,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = props => {
    const headerRef = useRef<HTMLElement>(null)
+   const authCtx = useContext(AuthContext)
 
    useEffect(() => {
       const HEADER_RGB = '81, 22, 96'
@@ -59,15 +62,18 @@ const Navbar: React.FC<NavbarProps> = props => {
             hidden md:flex justify-center items-center 
             gap-11 lg:gap-20
          '>
-            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.HOME}>Home</Link>
+            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.GALLERY}>Adoption</Link>
             <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.ABOUT}>About</Link>
             <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.CONTACT_US}>Contact Us</Link>
-            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.GALLERY}>Adoption</Link>
          </nav>
-         <Link className='
-            hidden justify-center items-center bg-primary-500 px-7 h-10 rounded-lg
-            md:flex hover:bg-primary-600 transition-colors
-         ' to={ROUTE_URL.AUTH}>Login</Link>
+         {
+            (authCtx && authCtx.firebaseUser) ?
+               <AccountDropdown /> :
+               <Link className='
+               hidden justify-center items-center bg-primary-500 px-7 h-10 rounded-lg
+               md:flex hover:bg-primary-600 transition-colors' to={ROUTE_URL.AUTH}
+               >Login</Link>
+         }
       </header>
    )
 }

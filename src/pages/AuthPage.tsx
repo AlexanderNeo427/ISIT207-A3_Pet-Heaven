@@ -5,11 +5,11 @@ import login_img from "../assets/images/golden_retriever.jpg"
 import signup_img from "../assets/images/golden_retriever_2.jpg"
 import { motion as framer, useWillChange } from 'framer-motion'
 import AuthInput from '../components/AuthInput'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { firebaseAuth } from '../others/FirebaseConfig'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { firebaseAuth, googleAuthProvider } from '../others/FirebaseConfig'
 import google_icon from '../assets/images/google_icon.png'
-import facebook_icon from '../assets/images/facebook_icon.png'
-import tiktok_icon from '../assets/images/tiktok_icon.png'
+import { useNavigate } from 'react-router-dom'
+import { ROUTE_URL } from '../others/Globals'
 
 export enum INPUT_ID {
    LOGIN_EMAIL,
@@ -28,7 +28,8 @@ const AuthPage: React.FC = () => {
    const [m_isAnimating, setIsAnimating] = useState<boolean>(false)
    const [m_inputData, setInputData] = useState<InputData>({})
 
-   const willChange = useWillChange()
+   const m_navTo = useNavigate()
+   const m_willChange = useWillChange()
 
    const ROTATION_TIME_MS = 600
 
@@ -49,9 +50,19 @@ const AuthPage: React.FC = () => {
       const pwd = m_inputData[INPUT_ID.LOGIN_PASSWORD]
 
       signInWithEmailAndPassword(firebaseAuth, email, pwd)
-         .then(userCreds => {
-            console.log("Successfully login with the user: ", userCreds.user, ". Redirecting....")
-            // TODO - SetTimeout
+         .then(_ => {
+            setTimeout(() => m_navTo(ROUTE_URL.GALLERY), 1500)
+         })
+         .catch(err => {
+            console.log("Unable to log the user in, exited with error code: ", err.code)
+            console.log("Error message: ", err.message)
+         })
+   }
+
+   const googleLoginHandler = async (): Promise<void> => {
+      signInWithPopup(firebaseAuth, googleAuthProvider)
+         .then(_ => {
+            setTimeout(() => m_navTo(ROUTE_URL.GALLERY), 1500)
          })
          .catch(err => {
             console.log("Unable to log the user in, exited with error code: ", err.code)
@@ -83,7 +94,7 @@ const AuthPage: React.FC = () => {
       <main>
          <Navbar useSticky={true} />
          <framer.section
-            style={{ willChange }}
+            style={{ willChange: m_willChange }}
             variants={{
                default: { rotateY: 0 },
                rotated: { rotateY: 89 }
@@ -115,7 +126,8 @@ const AuthPage: React.FC = () => {
                            <AuthInput inputID={INPUT_ID.LOGIN_EMAIL} inputType='email' placeholder='Email' inputData={m_inputData} setInputData={setInputData} />
                            <AuthInput inputID={INPUT_ID.LOGIN_PASSWORD} inputType='password' placeholder='Password' inputData={m_inputData} setInputData={setInputData} />
                            <button onClick={loginHandler} className='
-                              w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
+                              w-full py-3 rounded-lg transition-colors text-text-950 font-semibold text-lg
+                              bg-accent-500 hover:bg-accent-600 mb-margin-l
                            '>Login</button>
                         </>
                         :
@@ -128,47 +140,34 @@ const AuthPage: React.FC = () => {
                               w-full py-3 rounded-lg transition-colors bg-primary-500 hover:bg-primary-600 mb-margin-l
                            '>Sign up</button>
                         </>}
-                     {m_loginMode &&
-                        <div className='flex justify-between w-full mb-margin-s text-sm'>
-                           <div className='flex justify-center'>
-                              <input type="checkbox" name="" id="" />
-                              <span className='ml-margin-xxs'>Remember Me</span>
+                     {
+                        m_loginMode &&
+                        <>
+                           <div className='flex justify-between w-full mb-margin-s text-sm'>
+                              <div className='flex justify-center'>
+                                 <input type="checkbox" name="" id="" />
+                                 <span className='ml-margin-xxs'>Remember Me</span>
+                              </div>
+                              <a href="">Forgot your password?</a>
                            </div>
-                           <a href="">Forgot your password?</a>
-                        </div>}
+                           <div className='w-full flex justify-between items-center h-5 mb-margin-l text-gray-400'>
+                              <div className='w-full h-[1px] bg-gray-400'></div>
+                              <span className='text-sm min-w-28 text-center'>Or sign-in with</span>
+                              <div className='w-full h-[1px] bg-gray-400'></div>
+                           </div>
 
-                     <div className='w-full flex justify-between items-center h-5 mb-margin-l text-gray-400'>
-                        <div className='w-full h-[1px] bg-gray-400'></div>
-                        <span className='text-sm min-w-28 text-center'>
-                           {m_loginMode ? "Or sign-in with" : "Or register with"}
-                        </span>
-                        <div className='w-full h-[1px] bg-gray-400'></div>
-                     </div>
-
-                     {/* --- ALTERNATIVE SIGN-INS --- */}
-                     <div className='w-full flex justify-center text-sm gap-4'>
-                        <button className='
-                           flex justify-center items-center h-11 rounded-lg bg-background-900
-                           hover:bg-background-800 transition-colors duration-200 w-32
-                        '>
-                           <img className='w-5 h-5 mr-margin-s' src={google_icon} alt="" />
-                           <span>Google</span>
-                        </button>
-                        <button className='
-                           flex justify-center items-center h-11 rounded-lg bg-background-900
-                           hover:bg-background-800 transition-colors duration-200 w-32
-                        '>
-                           <img className='w-5 h-5 mr-margin-s' src={facebook_icon} alt="" />
-                           <span>Facebook</span>
-                        </button>
-                        <button className='
-                           flex justify-center items-center h-11 rounded-lg bg-background-900
-                           hover:bg-background-800 transition-colors duration-200 w-32
-                        '>
-                           <img className='w-5 h-5 mr-margin-s' src={tiktok_icon} alt="" />
-                           <span>TikTok</span>
-                        </button>
-                     </div>
+                           {/* --- ALTERNATIVE SIGN-INS --- */}
+                           <div className='w-full flex justify-center text-sm gap-4'>
+                              <button onClick={googleLoginHandler} className='
+                                 flex justify-center items-center h-11 rounded-lg bg-background-900
+                                 hover:bg-background-800 transition-colors duration-200 w-full
+                              '>
+                                 <img className='w-5 h-5 mr-margin-s' src={google_icon} alt="" />
+                                 <span>Google</span>
+                              </button>
+                           </div>
+                        </>
+                     }
                   </div>
                </form>
             </div>

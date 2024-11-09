@@ -9,7 +9,9 @@ export const ROUTE_URL = {
     CONTACT_US: "/contact_us",
     AUTH: "/auth",
     OUR_HISTORY: "/our_history",
+    MY_ACCOUNT: "/account",
     RECEIPT: "/receipt",
+    PET_RELEASE: "/pet_release"
 }
 
 export enum PET_API_TYPE { DOG, CAT }

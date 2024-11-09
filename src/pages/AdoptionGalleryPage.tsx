@@ -15,25 +15,24 @@ const AdoptionGalleryPage: React.FC = () => {
    const [m_agesDropdown, setAgesDropdown] = useState<DropdownOption[]>([])
    const [m_sizesDropdown, setSizesDropdown] = useState<DropdownOption[]>([])
 
-
    useEffect(() => {
       setPetTypeDropdown([
-         { optionName: "Option 1", isChecked: true },
-         { optionName: "option 2", isChecked: true },
-         { optionName: "Op 3", isChecked: true },
-         { optionName: "Op4", isChecked: true },
+         { optionName: "Dog", isChecked: true },
+         { optionName: "Cat", isChecked: true },
+         { optionName: "All", isChecked: true }
       ])
       setAgesDropdown([
-         { optionName: "Option 1", isChecked: true },
-         { optionName: "option 2", isChecked: true },
-         { optionName: "Op 3", isChecked: true },
-         { optionName: "Op4", isChecked: true },
+         { optionName: "Baby", isChecked: true },
+         { optionName: "Young", isChecked: true },
+         { optionName: "Adult", isChecked: true },
+         { optionName: "Senior", isChecked: true }
       ])
       setSizesDropdown([
-         { optionName: "Option 1", isChecked: true },
-         { optionName: "option 2", isChecked: true },
-         { optionName: "Op 3", isChecked: true },
-         { optionName: "Op4", isChecked: true },
+         { optionName: "Extra Small", isChecked: true },
+         { optionName: "Small", isChecked: true },
+         { optionName: "Medium", isChecked: true },
+         { optionName: "Large", isChecked: true },
+         { optionName: "Large", isChecked: true }
       ])
 
       // const fetchPetApiData = async (): Promise<void> => {
@@ -65,10 +64,6 @@ const AdoptionGalleryPage: React.FC = () => {
             <div className='flex'>
 
                {/* ---- DROPDOWN CONTAINER ---- */}
-               <div className='mr-margin-l'>
-                  {/* <Select options={petOptions} /> */}
-               </div>
-
                <div className='mr-margin-m'>
                   <Dropdown
                      label='Gender'

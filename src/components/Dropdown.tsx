@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 
 export interface DropdownOption {
    optionName: string
@@ -14,6 +14,19 @@ interface DropdownProps {
 
 const Dropdown: React.FC<DropdownProps> = props => {
    const [m_isOpen, setIsOpen] = useState<boolean>(false)
+   const dropdownRef = useRef<HTMLDivElement>(null)
+
+   const windowClickListener = (evt: MouseEvent): void => {
+      if (!m_isOpen || !dropdownRef.current ||
+         dropdownRef.current.contains(evt.target as Node)
+      ) { return }
+      setIsOpen(false)
+   }
+
+   useEffect(() => {
+      document.addEventListener('mousedown', windowClickListener)
+      return () => document.removeEventListener('mousedown', windowClickListener)
+   }, [m_isOpen])
 
    const onChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>, optionName: string): void => {
       props.setOptions(oldOptions => {
@@ -25,7 +38,7 @@ const Dropdown: React.FC<DropdownProps> = props => {
    }
 
    return (
-      <div className='relative'>
+      <div ref={dropdownRef} className='relative'>
          <button
             onClick={() => setIsOpen(isOpen => !isOpen)}
             className='
