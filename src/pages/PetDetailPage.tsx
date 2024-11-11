@@ -113,25 +113,7 @@ const PetDetailPage: React.FC = () => {
                            m_petApiData.apiType === PET_API_TYPE.DOG ?
                               `${m_petApiData.breedData?.breed}'s are bred for ${(m_petApiData.breedData as DogBreedData).bredFor}` :
                               `${(m_petApiData.breedData as CatBreedData).description}`
-                        }</p>
-
-                        {(() => {
-                           const numParagraphs = Utils.randInt(1, 4)
-                           for (let i = 0; i < numParagraphs; i++) {
-                              return (
-                                 <p className='text-left mb-margin-l text-lg'>{
-                                    new LoremIpsum().generateParagraphs(Utils.randInt(1, 3))
-                                 }</p>
-                              )
-                           }
-                        })()}
-
-                        <p className='text-left mb-margin-l text-lg'>{
-                           new LoremIpsum({
-                              sentencesPerParagraph: { min: 2, max: 5 },
-                              wordsPerSentence: { min: 4, max: 14 }
-                           }).generateParagraphs(Utils.randInt(1, 3))
-                        }</p>
+                        }</p> 
 
                         {/* ---- PET ATTRIBUTES/INFO ----- */}
                         <div className=''>{
