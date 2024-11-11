@@ -35,13 +35,13 @@ const AdoptionGalleryPage: React.FC = () => {
          { optionName: "Large", isChecked: true }
       ])
 
-      // const fetchPetApiData = async (): Promise<void> => {
-      //    const allPetData = await Utils.getBatchPetAPIData(10)
-      //    Utils.durstenfeldShuffle(allPetData)
-      //    setPetData(allPetData)
-      //    setIsLoading(false)
-      // }
-      // fetchPetApiData()
+      const fetchPetApiData = async (): Promise<void> => {
+         const allPetData = await Utils.getBatchPetAPIData(10)
+         Utils.durstenfeldShuffle(allPetData)
+         setPetData(allPetData)
+         setIsLoading(false)
+      }
+      fetchPetApiData()
    }, [])
 
    const getAnimatedCards = (): JSX.Element[] => {

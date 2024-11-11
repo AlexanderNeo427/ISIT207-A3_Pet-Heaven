@@ -6,6 +6,9 @@ const PetReleasePage: React.FC = () => {
    return (
       <div>
          <Navbar />
+         <form action="">
+
+         </form>
          <FooterSection />
       </div>
    )
