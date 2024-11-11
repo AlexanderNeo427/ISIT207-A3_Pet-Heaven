@@ -6,7 +6,7 @@ import dog_img_3 from '../../assets/images/golden_retriever_2.jpg'
 
 const AdoptionStepsSection: React.FC = () => {
    return (
-      <section className='flex flex-col justify-start items-center bg-background-900 py-margin-3xl'>
+      <section className='flex flex-col justify-start items-center bg-background-900 py-margin-xl'>
          <div className='w-full max-w-3xl px-8'>
             <h2 className='text-4xl mb-text-xxs text-text-50'>Looking to adopt?</h2>
             <p className='text-lg font-medium text-text-100'>

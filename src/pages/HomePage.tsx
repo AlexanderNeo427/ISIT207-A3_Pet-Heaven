@@ -6,6 +6,7 @@ import PetStatsSection from '../components/sections/PetStatsSection'
 import AdoptionStepsSection from '../components/sections/AdoptionStepsSection'
 import FooterSection from '../components/sections/FooterSection'
 import TestimonialsSection from '../components/sections/TestimonialsSection'
+import PetReleaseSection from '../components/sections/PetReleaseSection'
 
 const HomePage: React.FC = () => {
    return (
@@ -15,6 +16,7 @@ const HomePage: React.FC = () => {
          <AboutUsSection />
          <PetStatsSection />
          <AdoptionStepsSection />
+         <PetReleaseSection />
          <TestimonialsSection />
          <FooterSection />
       </main>

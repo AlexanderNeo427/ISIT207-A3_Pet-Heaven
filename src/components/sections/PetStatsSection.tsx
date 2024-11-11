@@ -4,7 +4,7 @@ import PercentageCircle from '../PercentageCircle'
 const PetStatsSection: React.FC = () => {
    return (
       <section className='min-h-96 flex justify-center items-center'>
-         <div className='my-margin-3xl flex flex-col justify-start items-center px-12'>
+         <div className='my-margin-2xl flex flex-col justify-start items-center px-12'>
             <div className='flex flex-col justify-start items-center max-w-3xl text-center'>
                <h2 className='font-bold text-lg text-text-300 mb-text-xxs'>
                   <i>DID YOU KNOW?</i>

@@ -58,7 +58,7 @@ const CarouselItem: React.FC<CarouselItemProps> = props => {
             height: props.heightRem + "rem",
             transform: `translateX(${props.offset}rem)`
          }}
-         className='absolute px-5 py5'
+         className='absolute px-2'
       >
          <div className='relative w-full h-full'>
             <div
@@ -111,6 +111,8 @@ const TestimonialCarousel: React.FC<TestimonialCarouselProps> = props => {
    // Value of m_carouseOffset will be updated via the requestAnimationFrame in a useEffect below
    useEffect(() => {
       setCarouselOffets(
+         props.reverseScrollDir ? 
+         props.testimonialData.map((_, idx) => (WIDTH_REM * idx) + 200) :
          props.testimonialData.map((_, idx) => WIDTH_REM * idx)
       )
       if (m_animHandle.current) {
@@ -128,7 +130,7 @@ const TestimonialCarousel: React.FC<TestimonialCarouselProps> = props => {
    }, [m_divRef.current])
 
    useEffect(() => {
-      const SCROLL_SPEED = 2
+      const SCROLL_SPEED = 2.5
 
       let prevTime = 0
       const onTick = (timeElapsed: number): void => {
@@ -137,7 +139,6 @@ const TestimonialCarousel: React.FC<TestimonialCarouselProps> = props => {
 
          const WRAP_SIZE = WIDTH_REM * (props.testimonialData.length - 1)
 
-         // setCarouselOffets(props.testimonialData.map((_, idx) => WIDTH_REM * idx));
          setCarouselOffets(prevOffsets => {
             return prevOffsets.map(offset => {
                const newOffset = offset +
@@ -185,8 +186,13 @@ const TestimonialCarousel: React.FC<TestimonialCarouselProps> = props => {
 
 const TestimonialsSection: React.FC = () => {
    return (
-      <section className='min-h-96 bg-background-600 py-margin-xl flex flex-col items-center gap-6'>
+      <section className='min-h-96 bg-background-700 py-margin-2xl flex flex-col items-center'>
+         <h2 className='text-4xl text-text-100 mb-text-xxs'>Join the adoption family!</h2>
+         <p className='text-text-200 text-xl font-medium mb-text-l'>
+            <i>View stories on how much joy having a furry friend can bring to your life</i>
+         </p>
          <TestimonialCarousel testimonialData={testimonialDataTop} />
+         <div className='min-h-8'></div>
          <TestimonialCarousel reverseScrollDir testimonialData={testimonialDataBottom} />
       </section>
    )
