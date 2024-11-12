@@ -3,8 +3,8 @@ import { PET_API_TYPE, PetApiData } from '../others/Globals'
 import { useNavigate } from 'react-router-dom'
 
 const PetInfoCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
-   const [m_isHovered, setIsHovered] = useState<boolean>(false) 
-   
+   const [m_isHovered, setIsHovered] = useState<boolean>(false)
+
    const navTo = useNavigate()
 
    const cardClickHandler = () => {
@@ -15,10 +15,8 @@ const PetInfoCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
 
    return (
       <div
-         onMouseEnter={() => setIsHovered(true)} 
-         onMouseLeave={() => setIsHovered(false)}
-         onClick={cardClickHandler}
-         className='my-3 relative cursor-pointer'
+         onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+         onClick={cardClickHandler} className='my-3 relative cursor-pointer'
       >
          <img className='min-h-64 rounded-xl object-cover' src={petApiData.imgURL} alt="" />
          <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-center items-end'>
