@@ -1,11 +1,46 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import tick_svg from '../assets/SVG/tick.svg'
 import email_svg from '../assets/SVG/email.svg'
 import fingerprint_svg from '../assets/SVG/fingerprint.svg'
 import clock_svg from '../assets/SVG/clock.svg'
+import { Link, useNavigate } from 'react-router-dom'
+import { ROUTE_URL } from '../others/Globals'
 
 const ReceiptPage: React.FC = () => {
+   const [m_navigateFlag, setNavigateFlag] = useState<boolean>(false)
+   const [m_timeLeft, setTimeLeft] = useState<number>(12)
+   const m_timerHandle = useRef<NodeJS.Timeout>()
+   const m_navTo = useNavigate()
+
+   const tryDecrementTimer = () => {
+      if (m_timerHandle && m_timerHandle.current) {
+         clearTimeout(m_timerHandle.current)
+      }
+      setTimeLeft(timeLeft => {
+         const timeNext = timeLeft - 1
+         if (timeNext <= 0) {
+            setNavigateFlag(true)
+         }
+         m_timerHandle.current = setTimeout(() => tryDecrementTimer(), 1000)
+         return timeNext
+      })
+   }
+
+   useEffect(() => {
+      if (m_navigateFlag) {
+         m_navTo(ROUTE_URL.HOME)
+      }
+   }, [m_navigateFlag])
+
+   useEffect(() => {
+      if (m_timerHandle && m_timerHandle.current) {
+         clearTimeout(m_timerHandle.current)
+      }
+      tryDecrementTimer()
+      return () => clearTimeout(m_timerHandle.current)
+   }, [])
+
    return (
       <main className='h-screen w-screen bg-primary-800 flex justify-center items-center'>
 
@@ -45,10 +80,18 @@ const ReceiptPage: React.FC = () => {
                   <p className='font-medium text-lg text-text-50'>Be sure to arrive on time to collect your pet</p>
                </div>
 
-               <div className='flex justify-start items-center mb-margin-s'>
+               <div className='flex justify-start items-center mb-margin-2xl'>
                   <img className='w-10 h-10 mr-margin-s' src={fingerprint_svg} />
                   <p className='font-medium text-lg text-text-50'>Be sure to bring your Pickup ID</p>
                </div>
+
+               <span>
+                  <i>
+                     You will be automatically re-directed to the
+                     <Link to={ROUTE_URL.HOME} className='underline'> home page </Link>
+                     in {m_timeLeft} seconds
+                  </i>
+               </span>
             </div>
          </div>
       </main>
