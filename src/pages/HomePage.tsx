@@ -11,7 +11,7 @@ import PetReleaseSection from '../components/sections/PetReleaseSection'
 const HomePage: React.FC = () => {
    return (
       <main>
-         <Navbar scrollFadeMax={300}/>
+         <Navbar scrollFadeMax={400}/>
          <HeroSection />
          <AboutUsSection />
          <PetStatsSection />

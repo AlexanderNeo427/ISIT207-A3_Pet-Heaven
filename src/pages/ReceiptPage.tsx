@@ -5,12 +5,13 @@ import email_svg from '../assets/SVG/email.svg'
 import fingerprint_svg from '../assets/SVG/fingerprint.svg'
 import clock_svg from '../assets/SVG/clock.svg'
 import { Link, useNavigate } from 'react-router-dom'
-import { ROUTE_URL } from '../others/Globals'
+import { ROUTE_URL, Utils } from '../others/Globals'
 
 const ReceiptPage: React.FC = () => {
    const [m_navigateFlag, setNavigateFlag] = useState<boolean>(false)
    const [m_timeLeft, setTimeLeft] = useState<number>(12)
    const m_timerHandle = useRef<NodeJS.Timeout>()
+   const m_orderID = useRef<string>(Utils.generateRandomString(10))
    const m_navTo = useNavigate()
 
    const tryDecrementTimer = () => {
@@ -28,12 +29,6 @@ const ReceiptPage: React.FC = () => {
    }
 
    useEffect(() => {
-      if (m_navigateFlag) {
-         m_navTo(ROUTE_URL.HOME)
-      }
-   }, [m_navigateFlag])
-
-   useEffect(() => {
       if (m_timerHandle && m_timerHandle.current) {
          clearTimeout(m_timerHandle.current)
       }
@@ -41,11 +36,17 @@ const ReceiptPage: React.FC = () => {
       return () => clearTimeout(m_timerHandle.current)
    }, [])
 
+   useEffect(() => {
+      if (m_navigateFlag) { m_navTo(ROUTE_URL.HOME) }
+   }, [m_navigateFlag])
+
    return (
       <main className='h-screen w-screen bg-primary-800 flex justify-center items-center'>
 
          {/* --- CONFIRMATION CONTAINER --- */}
-         <div className='w-full h-full sm:max-w-2xl sm:max-h-[70%] flex flex-col shadow-xl rounded-t-xl'>
+         <div className='
+            w-full h-full sm:max-w-2xl lg:max-w-3xl sm:max-h-[80%] flex flex-col shadow-xl rounded-t-xl
+         '>
 
             {/* --- HEADER --- */}
             <div className='w-full bg-accent-500 flex flex-col justify-start items-center px-11 py-10 rounded-t-xl'>
@@ -62,37 +63,39 @@ const ReceiptPage: React.FC = () => {
             </div>
 
             {/* --- DETAILS ---- */}
-            <div className='
-               w-full h-full flex flex-col justify-start items-start 
-               text-text-50 bg-background-900 px-10 py-8 
-            '>
-               <h2 className='text-3xl font-medium mb-margin-m'>
-                  Pickup ID: <strong className='underline underline-offset-4'>#jslifjslefj</strong>
-               </h2>
+            <div className='w-full h-full flex justify-center items-center bg-background-900'>
+               <div className='
+                  w-[70%] h-[80%] flex flex-col justify-start items-start text-text-50 px-10 py-8 
+               '>
+                  <h2 className='text-3xl font-medium mb-margin-m'>
+                     Pickup ID: <strong className='underline underline-offset-4'>{'#' + m_orderID.current}</strong>
+                  </h2>
 
-               <div className='flex justify-start items-center mb-margin-s'>
-                  <img className='w-10 h-10 mr-margin-s' src={email_svg} />
-                  <p className='font-medium text-xl text-text-50'>An email will be sent to you with the adoption details</p>
+                  <div className='flex justify-start items-center mb-margin-s'>
+                     <img className='w-10 h-10 mr-margin-m' src={email_svg} />
+                     <p className='font-medium text-lg text-text-50'>An email will be sent to you with the adoption details</p>
+                  </div>
+
+                  <div className='flex justify-start items-center mb-margin-s'>
+                     <img className='w-10 h-10 mr-margin-m' src={clock_svg} />
+                     <p className='font-medium text-lg text-text-50'>Be sure to arrive on time to collect your pet</p>
+                  </div>
+
+                  <div className='flex justify-start items-center mb-margin-2xl'>
+                     <img className='w-10 h-10 mr-margin-m' src={fingerprint_svg} />
+                     <p className='font-medium text-lg text-text-50'>Be sure to bring your Pickup ID</p>
+                  </div>
+
+                  <span>
+                     <i>
+                        You will be automatically re-directed to the
+                        <Link to={ROUTE_URL.HOME} className='underline'> home page </Link>
+                        in {m_timeLeft} seconds
+                     </i>
+                  </span>
                </div>
-
-               <div className='flex justify-start items-center mb-margin-s'>
-                  <img className='w-10 h-10 mr-margin-s' src={clock_svg} />
-                  <p className='font-medium text-lg text-text-50'>Be sure to arrive on time to collect your pet</p>
-               </div>
-
-               <div className='flex justify-start items-center mb-margin-2xl'>
-                  <img className='w-10 h-10 mr-margin-s' src={fingerprint_svg} />
-                  <p className='font-medium text-lg text-text-50'>Be sure to bring your Pickup ID</p>
-               </div>
-
-               <span>
-                  <i>
-                     You will be automatically re-directed to the
-                     <Link to={ROUTE_URL.HOME} className='underline'> home page </Link>
-                     in {m_timeLeft} seconds
-                  </i>
-               </span>
             </div>
+
          </div>
       </main>
    )

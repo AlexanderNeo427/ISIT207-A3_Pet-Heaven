@@ -7,7 +7,7 @@ import AccountDropdown from './AccountDropdown'
 
 interface NavbarProps {
    useSticky?: boolean
-   scrollFadeMax?: number 
+   scrollFadeMax?: number
 }
 
 const Navbar: React.FC<NavbarProps> = props => {
@@ -49,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = props => {
          </Link>
 
          {/* --- SMALL NAVBAR | HIDES WHEN SCREEN EXPANDS ---- */}
-         <nav className='flex justify-between md:hidden'>
+         <nav className='flex justify-between lg:hidden'>
             <button className='h-full flex flex-col justify-center items-center gap-2 p-2'>
                <div className='bg-background-950 h-[2px] w-8'></div>
                <div className='bg-background-950 h-[2px] w-8'></div>
@@ -59,19 +59,19 @@ const Navbar: React.FC<NavbarProps> = props => {
 
          {/* --- LARGE NAVBAR | SHOWS WHEN SCREEN EXPANDS ---- */}
          <nav className='
-            hidden md:flex justify-center items-center 
-            gap-11 lg:gap-20
+            hidden lg:flex justify-center items-center 
+            gap-11 md:gap-16 lg:gap-28
          '>
-            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.GALLERY}>Adoption</Link>
-            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.ABOUT}>About</Link>
-            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.CONTACT_US}>Contact Us</Link>
+            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.HOME}>Home</Link>
+            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.GALLERY}>Adopt</Link>
+            <Link className='hover:text-accent-600 transition-colors' to={ROUTE_URL.PET_RELEASE}>Pet Release</Link>
          </nav>
          {
             (authCtx && authCtx.firebaseUser) ?
                <AccountDropdown /> :
                <Link className='
                hidden justify-center items-center bg-primary-500 px-7 h-10 rounded-lg
-               md:flex hover:bg-primary-600 transition-colors' to={ROUTE_URL.AUTH}
+               lg:flex hover:bg-primary-600 transition-colors' to={ROUTE_URL.AUTH}
                >Login</Link>
          }
       </header>

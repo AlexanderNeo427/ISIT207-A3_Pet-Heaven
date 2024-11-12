@@ -15,12 +15,12 @@ const HeroSection: React.FC = () => {
       '>
 
          {/* ---- VIDEO GRID ---- */}
-         <video className='w-full h-full object-cover' autoPlay loop={true} src={pet_video_1} />
-         <video className='w-full h-full object-cover' autoPlay loop={true} src={pet_video_2} />
-         <video className='w-full h-full object-cover' autoPlay loop={true} src={pet_video_3} />
-         <video className='w-full h-full object-cover' autoPlay loop={true} src={pet_video_4} />
-         <video className='w-full h-full object-cover' autoPlay loop={true} src={pet_video_5} />
-         <video className='w-full h-full object-cover' autoPlay loop={true} src={pet_video_6} />
+         <video className='w-full h-full object-cover' autoPlay loop src={pet_video_1} />
+         <video className='w-full h-full object-cover' autoPlay loop src={pet_video_2} />
+         <video className='w-full h-full object-cover' autoPlay loop src={pet_video_3} />
+         <video className='w-full h-full object-cover' autoPlay loop src={pet_video_4} />
+         <video className='w-full h-full object-cover' autoPlay loop src={pet_video_5} />
+         <video className='w-full h-full object-cover' autoPlay loop src={pet_video_6} />
 
          {/* ----- OPACITY OVERLAY ----- */}
          <div className='absolute top-0 bottom-0 left-0 right-0 bg-primary-50 opacity-70'></div>
@@ -36,13 +36,8 @@ const HeroSection: React.FC = () => {
                <p className='text-xl mb-6'>Where every animal, big or small, deserves to find a loving forever home. Begin your adoption journey today, and find yourself a furry friend!</p>
                <div className='h-14'>
                   <button className='
-                     bg-primary-500 px-5 h-full rounded-lg mr-3
-                     hover:bg-primary-600 transition-colors
-                  '>Adopt a Pet</button>  
-                  <button className='
-                     border-2 border-primary-500 px-5 h-full rounded-lg
-                     hover:bg-primary-600 hover:text-text-950
-                  '>Donate</button>
+                     bg-primary-500 px-5 h-full rounded-lg mr-3 hover:bg-primary-600 transition-colors
+                  '>Adopt a Pet</button>
                </div>
             </div>
          </div>

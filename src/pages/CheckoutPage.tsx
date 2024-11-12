@@ -13,9 +13,9 @@ const CheckoutInput: React.FC<CheckoutInputFieldProps> = props => {
          <input
             type={props.inputType} placeholder={props.placeholderText || ""}
             className='
-                  w-full h-10 px-4 focus:outline-none 
-                  border-gray-300 border-[1px] rounded-lg bg-transparent
-               ' />
+               w-full h-10 px-4 focus:outline-none 
+               border-gray-300 border-[1px] rounded-lg bg-transparent'
+         />
       </label>
    )
 }

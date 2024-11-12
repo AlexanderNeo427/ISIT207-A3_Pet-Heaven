@@ -6,7 +6,6 @@ import AdoptionGalleryPage from './pages/AdoptionGalleryPage'
 import PetDetailPage from './pages/PetDetailPage'
 import CheckoutPage from './pages/CheckoutPage'
 import ReceiptPage from './pages/ReceiptPage'
-import MyAccountPage from './pages/MyAccountPage'
 import PetReleasePage from './pages/PetReleasePage'
 
 const browserRouter = createBrowserRouter([
@@ -16,8 +15,7 @@ const browserRouter = createBrowserRouter([
    { path: ROUTE_URL.PET_DETAIL, element: <PetDetailPage /> },
    { path: ROUTE_URL.CHECKOUT, element: <CheckoutPage /> },
    { path: ROUTE_URL.RECEIPT, element: <ReceiptPage /> },
-   { path: ROUTE_URL.MY_ACCOUNT, element: <MyAccountPage /> },
-   { path: ROUTE_URL.PET_RELEASE, element: <PetReleasePage/> }
+   { path: ROUTE_URL.PET_RELEASE, element: <PetReleasePage /> }
 ])
 
 const App: React.FC = () => {

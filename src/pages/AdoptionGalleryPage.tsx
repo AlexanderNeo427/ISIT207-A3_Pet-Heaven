@@ -36,7 +36,7 @@ const AdoptionGalleryPage: React.FC = () => {
       ])
 
       const fetchPetApiData = async (): Promise<void> => {
-         const allPetData = await Utils.getBatchPetAPIData(10)
+         const allPetData = await Utils.getBatchPetAPIData(20)
          Utils.durstenfeldShuffle(allPetData)
          setPetData(allPetData)
          setIsLoading(false)
@@ -49,9 +49,8 @@ const AdoptionGalleryPage: React.FC = () => {
       return arr.map((_, idx) => {
          return (
             <div
-               key={idx}
-               style={{ height: `${Utils.randInt(16, 23)}rem` }}
-               className='w-full min-w-80 bg-gray-300 animate-pulse rounded-lg shadow-lg mb-4'>
+               key={idx} style={{ height: `${Utils.randInt(16, 23)}rem` }}
+               className='w-full min-w-64 bg-gray-300 animate-pulse rounded-lg shadow-lg mb-4'>
             </div>
          )
       })
@@ -60,30 +59,27 @@ const AdoptionGalleryPage: React.FC = () => {
    return (
       <main>
          <Navbar useSticky={true} />
-         <section className='flex justify-center items-center py-margin-l px-margin-s'>
+         <section className='flex justify-center items-center py-margin-xl px-margin-s'>
             <div className='flex'>
 
                {/* ---- DROPDOWN CONTAINER ---- */}
                <div className='mr-margin-m'>
                   <Dropdown
-                     label='Gender'
-                     options={m_petTypeDropdown}
+                     label='Gender' options={m_petTypeDropdown}
                      setOptions={setPetTypeDropdown}
                   />
                </div>
 
                <div className='mr-margin-m'>
                   <Dropdown
-                     label='Sizes'
-                     options={m_sizesDropdown}
+                     label='Sizes' options={m_sizesDropdown}
                      setOptions={setSizesDropdown}
                   />
                </div>
 
                <div className='mr-margin-m'>
                   <Dropdown
-                     label='Ages'
-                     options={m_agesDropdown}
+                     label='Ages' options={m_agesDropdown}
                      setOptions={setAgesDropdown}
                   />
                </div>
@@ -97,14 +93,18 @@ const AdoptionGalleryPage: React.FC = () => {
                   />
                </div>
             </div>
-
          </section>
 
-         <section className='min-h-96 flex justify-center items-center'>
+         <section className='min-h-96 flex flex-col justify-center items-center'>
             <div className='max-w-6xl mx-margin-s columns-2 md:columns-3 2xl:columns-4 my-margin-l'>{
-               m_isLoading ? getAnimatedCards() :
+               m_isLoading ?
+                  getAnimatedCards() :
                   m_petData.map(data => <PetInfoCard key={data.id} petApiData={data} />)
             }</div>
+            <button className='
+               w-56 h-12 bg-accent-500 my-margin-xl rounded-lg 
+               text-text-950 font-medium hover:bg-accent-600 transition-colors
+            '>Load more</button>
          </section>
          <FooterSection />
       </main>

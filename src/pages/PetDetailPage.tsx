@@ -7,7 +7,6 @@ import MorePetsCard from '../components/MorePetsCard'
 
 import LoadingScreen from '../components/LoadingScreen'
 import AdditionalDetailCard from '../components/AdditionalDetailCard'
-import { LoremIpsum } from 'lorem-ipsum'
 
 import calendar_svg from '../assets/SVG/calendar.svg'
 import ruler_svg from '../assets/SVG/ruler.svg'
@@ -47,7 +46,7 @@ const PetDetailPage: React.FC = () => {
          setIsLoading(false)
       }
       fetchRequiredPetApiData()
-   }, [])
+   }, [m_searchParams])
 
    interface PetAttribute {
       attribute: string
@@ -92,9 +91,23 @@ const PetDetailPage: React.FC = () => {
             <section className='min-h-[50rem] text-center flex flex-col justify-start items-center'>
 
                {/* ---- BANNER IMAGE ---- */}
-               <div style={{
-                  backgroundImage: `url(${m_petApiData.imgURL})`
-               }} className='w-full h-96 mb-margin-xl'></div>
+               <div className='w-full h-96 mx-margin-l mb-margin-l relative'>
+                  <div className='absolute top-0 left-0 right-0 bottom-0 flex'>
+                     <div
+                        style={{ backgroundImage: `url(${m_petApiData.imgURL})` }}
+                        className='w-[10%] h-96 mb-margin-xl 
+                     '></div>
+                     <div
+                        style={{ backgroundImage: `url(${m_petApiData.imgURL})` }}
+                        className='w-[10%] h-96 mb-margin-xl 
+                     '></div>
+                     <div
+                        style={{ backgroundImage: `url(${m_petApiData.imgURL})` }}
+                        className='w-[10%] h-96 mb-margin-xl 
+                     '></div>
+                  </div>
+               </div>
+
 
                {/* --- BODY (constrained width) --- */}
                <div className='max-w-7xl mx-margin-l'>
@@ -103,7 +116,7 @@ const PetDetailPage: React.FC = () => {
                   <div className='flex flex-col md:flex-row'>
 
                      {/* --- DESCRIPTION CONTAINER --- */}
-                     <div className='text-center flex-col items-start min-w-96 mb-margin-xl mr-margin-l'>
+                     <div className='text-center flex-col items-start min-w-[30rem] mb-margin-xl mr-margin-l'>
 
                         {/* ---- DESC HEADER ---- */}
                         <h1 className='font-bold text-3xl text-left mb-margin-xxs'>{m_petApiData.breedData?.breed.toUpperCase()}</h1>
@@ -113,7 +126,7 @@ const PetDetailPage: React.FC = () => {
                            m_petApiData.apiType === PET_API_TYPE.DOG ?
                               `${m_petApiData.breedData?.breed}'s are bred for ${(m_petApiData.breedData as DogBreedData).bredFor}` :
                               `${(m_petApiData.breedData as CatBreedData).description}`
-                        }</p> 
+                        }</p>
 
                         {/* ---- PET ATTRIBUTES/INFO ----- */}
                         <div className=''>{
@@ -121,7 +134,6 @@ const PetDetailPage: React.FC = () => {
                               return (
                                  <div key={idx} className='flex justify-start items-center mb-margin-m'>
                                     <img className='w-7 mr-margin-s' src={SVGs[Utils.randInt(0, SVGs.length - 1)]} alt="" />
-                                    {/* <span className='mr-margin-xs'><strong>•</strong></span> */}
                                     <span className='text-left font-medium text-text-200'>{temperament}</span>
                                  </div>
                               )

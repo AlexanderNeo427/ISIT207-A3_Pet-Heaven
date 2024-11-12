@@ -32,15 +32,15 @@ const AccountDropdown: React.FC = () => {
    }
 
    return (
-      <div ref={m_dropdownRef} className='relative cursor-pointer'>
+      <div ref={m_dropdownRef} className='relative cursor-pointer hidden lg:block'>
 
          {/* --- HEADER BUTTON --- */}
          <div onClick={() => setIsOpen(isOpen => !isOpen)} className='flex justify-start items-center'>
             <img className='w-8 h-8 mr-margin-xs' src={account_svg} alt="" />
             <button className='mr-text flex'>
-               <span className='mr-text-xxs text-xl'>{
+               <span className='mr-text-xxs text-lg'>{
                   m_authCtx?.firebaseUser?.displayName ?
-                     "Hi, " + m_authCtx.firebaseUser.displayName : "User"
+                     "Hi, " + m_authCtx.firebaseUser.displayName.split(' ')[0] : "User"
                }</span>
             </button>
             <img className='rotate-90 w-7 h-7' src={arrow_right_svg} alt="" />
