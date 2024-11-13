@@ -6,14 +6,11 @@ import logout_svg from '../assets/SVG/logout.svg'
 import arrow_right_svg from '../assets/SVG/arrow_right.svg'
 import { firebaseAuth } from '../others/FirebaseConfig'
 import { signOut } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
-import { ROUTE_URL } from '../others/Globals'
 
 const AccountDropdown: React.FC = () => {
    const [m_isOpen, setIsOpen] = useState<boolean>(false)
    const m_dropdownRef = useRef<HTMLDivElement>(null)
    const m_authCtx = useContext(AuthContext)
-   const m_navTo = useNavigate()
 
    const windowClickListener = (evt: MouseEvent): void => {
       if (!m_isOpen || !m_dropdownRef.current ||
@@ -53,7 +50,7 @@ const AccountDropdown: React.FC = () => {
                absolute z-10 bg-accent-700 rounded-md shadow-xl right-0 mt-margin-m
                flex flex-col justify-start items-center w-52
             '>
-            <button onClick={() => m_navTo(ROUTE_URL.MY_ACCOUNT)} className='
+            <button className='
                w-full flex justify-start pl-margin-l items-center py-2 
                hover:bg-accent-400 transition-colors duration-75
             '>

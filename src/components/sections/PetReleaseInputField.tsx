@@ -15,7 +15,7 @@ const PetReleaseInputField: React.FC<PetReleaseInputField> = props => {
          "></div>
 
          <input
-            type={props.inputType || 'text'} 
+            type={props.inputType || 'text'}
             placeholder={props.placeholder ? props.placeholder + "..." : ""}
             className='
                relative w-full h-full px-5 text-text-200 font-medium 
