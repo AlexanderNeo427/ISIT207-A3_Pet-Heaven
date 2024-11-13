@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { PET_API_TYPE, PetApiData } from '../others/Globals'
 import heart_svg from '../assets/SVG/heart.svg'
 import { useNavigate } from 'react-router-dom'
 
-const MorePetsCard: React.FC<{ petApiData: PetApiData }> = ({ petApiData }) => {
+interface MorePetsCardProps {
+   petApiData: PetApiData
+   setIsLoading: Dispatch<SetStateAction<boolean>>
+}
+
+const MorePetsCard: React.FC<MorePetsCardProps> = ({ petApiData, setIsLoading }) => {
    const m_navTo = useNavigate()
 
    const cardClickHandler = () => {
+      setIsLoading(true) 
       const petType = petApiData.apiType === PET_API_TYPE.DOG ? "dog" : "cat"
       const destURL = `/pet_detail?pet_type=${petType}&pet_id=${petApiData.id}&breed_id=${petApiData.breedData?.breed_id}`
       m_navTo(destURL)

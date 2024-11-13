@@ -92,7 +92,7 @@ export default {
                 'text-xl': '3.33em',
                 'text-2xl': '5.388em',
                 'text-3xl': '8.71768692em'
-            },
+            }
         },
     },
     plugins: [],

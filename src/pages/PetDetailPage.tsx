@@ -80,43 +80,42 @@ const PetDetailPage: React.FC = () => {
       }
    }
 
-   if (m_isLoading) { return <LoadingScreen /> }
+   if (m_isLoading) {
+      return (
+         <main>
+            <Navbar useSticky />
+            <LoadingScreen />
+            <FooterSection />
+         </main>
+      )
+   }
 
    return (
       <main>
          <Navbar useSticky />{
-            m_petApiData &&
+            !m_isLoading && m_petApiData &&
 
             // SECTION - Full width of the page
             <section className='min-h-[50rem] text-center flex flex-col justify-start items-center'>
 
                {/* ---- BANNER IMAGE ---- */}
-               <div className='w-full h-96 mx-margin-l mb-margin-l relative'>
-                  <div className='absolute top-0 left-0 right-0 bottom-0 flex'>
-                     <div
-                        style={{ backgroundImage: `url(${m_petApiData.imgURL})` }}
-                        className='w-[10%] h-96 mb-margin-xl 
-                     '></div>
-                     <div
-                        style={{ backgroundImage: `url(${m_petApiData.imgURL})` }}
-                        className='w-[10%] h-96 mb-margin-xl 
-                     '></div>
-                     <div
-                        style={{ backgroundImage: `url(${m_petApiData.imgURL})` }}
-                        className='w-[10%] h-96 mb-margin-xl 
-                     '></div>
+               <div className='relative w-full h-96 mx-margin-l mb-margin-l'>
+                  <div className='relative flex h-96 gap-3'>
+                     <img className='w-full object-cover' src={m_petApiData.imgURL} alt="" />
+                     <img className='w-full object-cover' src={m_petApiData.imgURL} alt="" />
+                     <img className='w-full object-cover' src={m_petApiData.imgURL} alt="" />
                   </div>
                </div>
 
 
                {/* --- BODY (constrained width) --- */}
-               <div className='max-w-7xl mx-margin-l'>
+               <div className='max-w-6xl mx-margin-l'>
 
                   {/* --- BODY (Description + Adoption Fee Box) ---- */}
                   <div className='flex flex-col md:flex-row'>
 
                      {/* --- DESCRIPTION CONTAINER --- */}
-                     <div className='text-center flex-col items-start min-w-[30rem] mb-margin-xl mr-margin-l'>
+                     <div className='text-center flex-col items-start min-w-[35rem] mb-margin-xl mr-margin-l'>
 
                         {/* ---- DESC HEADER ---- */}
                         <h1 className='font-bold text-3xl text-left mb-margin-xxs'>{m_petApiData.breedData?.breed.toUpperCase()}</h1>
@@ -190,7 +189,7 @@ const PetDetailPage: React.FC = () => {
                      <h2 className='text-left text-2xl font-medium mb-text-xs'>View more pets!</h2>
                      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>{
                         m_morePets.map((petApiData, idx) => {
-                           return <MorePetsCard key={idx} petApiData={petApiData} />
+                           return <MorePetsCard key={idx} petApiData={petApiData} setIsLoading={setIsLoading} />
                         })
                      }</div>
                   </div>
