@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { PetApiData, Utils } from '../others/Globals'
 import search_icon from '../assets/SVG/search.svg'
 import Navbar from '../components/Navbar'
@@ -7,13 +7,24 @@ import FooterSection from '../components/sections/FooterSection'
 import Dropdown, { DropdownOption } from '../components/Dropdown'
 
 const AdoptionGalleryPage: React.FC = () => {
-   const [m_isLoading, setIsLoading] = useState<boolean>(true)
+   const m_loadCount = useRef<number>(-1)
+   const [m_loadingCardsShown, setLoadingCardsShown] = useState<boolean>(true)
    const [m_petData, setPetData] = useState<PetApiData[]>([])
 
    const [m_searchInput, setSearchInput] = useState<string>("")
    const [m_petTypeDropdown, setPetTypeDropdown] = useState<DropdownOption[]>([])
    const [m_agesDropdown, setAgesDropdown] = useState<DropdownOption[]>([])
    const [m_sizesDropdown, setSizesDropdown] = useState<DropdownOption[]>([])
+
+   const fetchPetApiData = async (numCards: number): Promise<void> => {
+      m_loadCount.current = numCards
+      setLoadingCardsShown(true)
+
+      const freshPetData = await Utils.getBatchPetAPIData(numCards)
+      Utils.durstenfeldShuffle(freshPetData)
+      setPetData(oldPetData => [...oldPetData, ...freshPetData])
+      setLoadingCardsShown(false)
+   }
 
    useEffect(() => {
       setPetTypeDropdown([
@@ -35,17 +46,11 @@ const AdoptionGalleryPage: React.FC = () => {
          { optionName: "Large", isChecked: true }
       ])
 
-      const fetchPetApiData = async (): Promise<void> => {
-         const allPetData = await Utils.getBatchPetAPIData(20)
-         Utils.durstenfeldShuffle(allPetData)
-         setPetData(allPetData)
-         setIsLoading(false)
-      }
-      fetchPetApiData()
+      fetchPetApiData(20)
    }, [])
 
-   const getAnimatedCards = (): JSX.Element[] => {
-      const arr = Array.from({ length: 10 })
+   const showLoadingCards = (cardCount: number): JSX.Element[] => {
+      const arr = Array.from({ length: cardCount })
       return arr.map((_, idx) => {
          return (
             <div
@@ -96,15 +101,17 @@ const AdoptionGalleryPage: React.FC = () => {
          </section>
 
          <section className='min-h-96 flex flex-col justify-center items-center'>
-            <div className='max-w-6xl mx-margin-s columns-2 md:columns-3 2xl:columns-4 my-margin-l'>{
-               m_isLoading ?
-                  getAnimatedCards() :
-                  m_petData.map(data => <PetInfoCard key={data.id} petApiData={data} />)
-            }</div>
-            <button className='
-               w-56 h-12 bg-accent-500 my-margin-xl rounded-lg 
-               text-text-950 font-medium hover:bg-accent-600 transition-colors
-            '>Load more</button>
+            <div className='max-w-6xl mx-margin-s columns-2 md:columns-3 2xl:columns-4 my-margin-l'>
+               {m_petData.map(data => <PetInfoCard key={data.id} petApiData={data} />)}
+               {m_loadingCardsShown && showLoadingCards(m_loadCount.current)}
+            </div>
+            {
+               !m_loadingCardsShown &&
+               <button onClick={() => fetchPetApiData(12)} className='
+                  w-56 h-12 bg-accent-500 my-margin-xl rounded-lg 
+                  text-text-950 font-medium hover:bg-accent-600 transition-colors
+               '>Load more</button>
+            }
          </section>
          <FooterSection />
       </main>
