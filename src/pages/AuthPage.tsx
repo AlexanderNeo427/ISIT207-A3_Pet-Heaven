@@ -116,9 +116,8 @@ const AuthPage: React.FC = () => {
 
                <form onSubmit={e => e.preventDefault()} className='flex justify-center items-center min-w-[28rem] xl:min-w-[34rem] px-10'>
                   <div className='w-full flex flex-col justify-start items-center'>
-                     {<button onClick={toggleClickHandler}
-                        className='mb-margin-xl'>
-                        {m_loginMode ? "Switch to sign up" : "Switch to login"}
+                     {<button onClick={toggleClickHandler} className='mb-margin-xl hover:underline'>
+                        {m_loginMode ? "← Head to sign up" : "Head to login →"}
                      </button>}
                      {m_loginMode ?
                         <>

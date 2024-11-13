@@ -13,6 +13,10 @@ export const ROUTE_URL = {
     PET_RELEASE: "/pet_release"
 }
 
+// export const LOCAL_STORAGE_KEY = {
+//     PAYMENT_AMOUNT: "PAYMENT_AMOUNT"
+// }
+
 export enum PET_API_TYPE { DOG, CAT }
 
 export class BreedData {

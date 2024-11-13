@@ -100,10 +100,10 @@ const PetDetailPage: React.FC = () => {
 
                {/* ---- BANNER IMAGE ---- */}
                <div className='relative w-full h-96 mx-margin-l mb-margin-l'>
-                  <div className='relative flex h-96 gap-3'>
-                     <img className='w-full object-cover' src={m_petApiData.imgURL} alt="" />
-                     <img className='w-full object-cover' src={m_petApiData.imgURL} alt="" />
-                     <img className='w-full object-cover' src={m_petApiData.imgURL} alt="" />
+                  <div className='relative flex h-96 gap-3 bg-gray-100 pb-3'>
+                     <img className='w-full object-cover outline outline-1 outline-gray-300' src={m_petApiData.imgURL} alt="" />
+                     <img className='w-full object-cover outline outline-1 outline-gray-300' src={m_petApiData.imgURL} alt="" />
+                     <img className='w-full object-cover outline outline-1 outline-gray-300' src={m_petApiData.imgURL} alt="" />
                   </div>
                </div>
 

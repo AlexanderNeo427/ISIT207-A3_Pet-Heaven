@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { HTMLInputTypeAttribute } from 'react'
 
 interface PetReleaseInputField {
    placeholder?: string
+   inputType?: HTMLInputTypeAttribute
 }
 
 const PetReleaseInputField: React.FC<PetReleaseInputField> = props => {
@@ -10,14 +11,15 @@ const PetReleaseInputField: React.FC<PetReleaseInputField> = props => {
 
          {/* --- TRANSLUCENT BACKGROUND --- */}
          <div className="
-            absolute inset-0 bg-white opacity-50 pointer-events-none rounded-full
+            absolute inset-0 bg-white opacity-70 pointer-events-none rounded-xl
          "></div>
 
          <input
-            type='text' placeholder={props.placeholder ? props.placeholder + "..." : ""}
+            type={props.inputType || 'text'} 
+            placeholder={props.placeholder ? props.placeholder + "..." : ""}
             className='
-               relative w-full h-full px-5 text-text-950 font-medium text-lg rounded-full 
-               bg-transparent placeholder-text-800 focus:outline-none
+               relative w-full h-full px-5 text-text-200 font-medium 
+               bg-transparent focus:outline-none text-lg placeholder:text-slate-500
          '/>
       </div>
    )
