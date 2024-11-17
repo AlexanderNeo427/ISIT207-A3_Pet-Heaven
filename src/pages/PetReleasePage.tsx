@@ -5,8 +5,6 @@ import background_img from '../assets/images/testimonials/dog_01.jpg'
 import PetReleaseInputField from '../components/sections/PetReleaseInputField'
 
 const PetReleasePage: React.FC = () => {
-   // const [options, setOptions] = useState<DropdownOption[]>([])
-
    return (
       <main>
          <Navbar useSticky />

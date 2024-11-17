@@ -1,4 +1,8 @@
 import React from 'react'
+import instagram_svg from '../../assets/SVG/Socials/Instagram.svg'
+import facebook_svg from '../../assets/SVG/Socials/Facebook.svg'
+import tiktok_svg from '../../assets/SVG/Socials/TikTok.svg'
+import x_svg from '../../assets/SVG/Socials/X.svg'
 
 const FooterSection: React.FC = () => {
    return (
@@ -11,7 +15,7 @@ const FooterSection: React.FC = () => {
                   flex flex-col justify-start items-start px-8 py-5
                   md:flex-row md:justify-between md:items-center
                '>
-                  <div className='flex flex-col justify-start items-start mb-margin-m md:mb-0'> 
+                  <div className='flex flex-col justify-start items-start mb-margin-m md:mb-0'>
                      <span className='text-2xl font-semibold'>Want to stay updated?</span>
                      <span className='text-base'>Subscribe to our mailing list</span>
                   </div>
@@ -46,12 +50,20 @@ const FooterSection: React.FC = () => {
                      <span>10am - 8pm</span>
                   </div>
                   <div className=''>
-                     <span className='text-lg font-semibold mb-text-xxs'>Socials</span>
-                     <div className='flex gap-3'>
-                        <a href="">Instagram</a>
-                        <a href="">Facebook</a>
-                        <a href="">Twitter/X</a>
-                        <a href="">TikTok</a>
+                     <span className='text-lg font-semibold'>Socials</span>
+                     <div className='flex gap-6 mt-margin-xs'>
+                        <a href="https://www.facebook.com">
+                           <img className='w-5 h-5' src={facebook_svg} alt="" />
+                        </a>
+                        <a href="https://www.instagram.com/">
+                           <img className='w-5 h-5' src={instagram_svg} alt="" />
+                        </a>
+                        <a href="https://www.tiktok.com/en/">
+                           <img className='w-5 h-5' src={tiktok_svg} alt="" />
+                        </a>
+                        <a href="https://x.com/home?lang=en">
+                           <img className='w-5 h-5' src={x_svg} alt="" />
+                        </a>
                      </div>
                   </div>
                </div>
