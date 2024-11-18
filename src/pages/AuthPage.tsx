@@ -10,6 +10,8 @@ import { firebaseAuth, googleAuthProvider } from '../others/FirebaseConfig'
 import google_icon from '../assets/images/google_icon.png'
 import { useNavigate } from 'react-router-dom'
 import { ROUTE_URL } from '../others/Globals'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export enum INPUT_ID {
    LOGIN_EMAIL,
@@ -20,6 +22,10 @@ export enum INPUT_ID {
 }
 
 export interface InputData {
+   [inputID: number]: string
+}
+
+export interface ErrorData {
    [inputID: number]: string
 }
 
@@ -51,22 +57,22 @@ const AuthPage: React.FC = () => {
 
       signInWithEmailAndPassword(firebaseAuth, email, pwd)
          .then(_ => {
+            toast.success("Successfully signed in! Re-directing....")
             setTimeout(() => m_navTo(ROUTE_URL.GALLERY), 1500)
          })
          .catch(err => {
-            console.log("Unable to log the user in, exited with error code: ", err.code)
-            console.log("Error message: ", err.message)
+            toast.error(err.message)
          })
    }
 
    const googleLoginHandler = async (): Promise<void> => {
       signInWithPopup(firebaseAuth, googleAuthProvider)
          .then(_ => {
+            toast.success("Successfully signed in! Re-directing....")
             setTimeout(() => m_navTo(ROUTE_URL.GALLERY), 1500)
          })
          .catch(err => {
-            console.log("Unable to log the user in, exited with error code: ", err.code)
-            console.log("Error message: ", err.message)
+            toast.error(err.message)
          })
    }
 
@@ -81,17 +87,17 @@ const AuthPage: React.FC = () => {
       }
 
       createUserWithEmailAndPassword(firebaseAuth, email, pwd)
-         .then(userCreds => {
-            console.log("Successfully signed up the user: ", userCreds.user, ". Proceed to sign in")
+         .then(_ => {
+            toast.success("Successful sign up!")
          })
          .catch(err => {
-            console.log("Unable to sign up with credentials, exited with error code: ", err.code)
-            console.log("Error message: ", err.message)
+            toast.error(err.message)
          })
    }
 
    return (
       <main className='flex flex-col min-h-screen'>
+         <ToastContainer />
          <Navbar useSticky={true} />
          <framer.section
             style={{ willChange: m_willChange }}
@@ -122,7 +128,10 @@ const AuthPage: React.FC = () => {
                      {m_loginMode ?
                         <>
                            <h2 className='font-bold text-3xl mb-text-m'>LOGIN</h2>
-                           <AuthInput inputID={INPUT_ID.LOGIN_EMAIL} inputType='email' placeholder='Email' inputData={m_inputData} setInputData={setInputData} />
+                           <AuthInput
+                              inputID={INPUT_ID.LOGIN_EMAIL} inputType='email'
+                              placeholder='Email' inputData={m_inputData}
+                              setInputData={setInputData} />
                            <AuthInput inputID={INPUT_ID.LOGIN_PASSWORD} inputType='password' placeholder='Password' inputData={m_inputData} setInputData={setInputData} />
                            <button onClick={loginHandler} className='
                               w-full py-3 rounded-lg transition-colors text-text-950 font-semibold text-lg

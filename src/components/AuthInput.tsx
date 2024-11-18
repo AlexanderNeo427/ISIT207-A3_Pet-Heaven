@@ -20,11 +20,13 @@ const AuthInput: React.FC<AuthInputProps> = props => {
    }
 
    return (
-      <input
-         onChange={onChangeHandler} value={props.inputData[props.inputID] || ''}
-         className='w-full px-4 py-3 mb-margin-s rounded-lg bg-gray-200 focus:outline-none'
-         type={props.inputType} placeholder={props.placeholder}
-      />
+      <div className='w-full px-4 py-3 mb-margin-s rounded-lg bg-gray-200'>
+         <input
+            onChange={onChangeHandler} value={props.inputData[props.inputID] || ''}
+            className='w-full bg-transparent focus:outline-none'
+            type={props.inputType} placeholder={props.placeholder}
+         />
+      </div>
    )
 }
 

@@ -24,10 +24,10 @@ const AdoptionStepsSection: React.FC = () => {
             '>
                <AdoptionStepCard
                   imgURL={dog_img_1} stepCount={1} header='Sign up as a member'
-                  content='Click here to register as a member to proceed with the adoption process'
+                  content='Register as a member to proceed with the adoption process'
                />
                <AdoptionStepCard
-                  imgURL={dog_img_2} stepCount={2} header='Find a pet' aspectRatio={(8/11)}
+                  imgURL={dog_img_2} stepCount={2} header='Find a pet' aspectRatio={(8 / 11)}
                   content='Browser our large catalogue of pets who are currently looking for their forever home'
                />
                <AdoptionStepCard
