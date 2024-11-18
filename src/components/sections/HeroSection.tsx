@@ -5,8 +5,12 @@ import pet_video_3 from '../../assets/videos/pet_video_3.mp4'
 import pet_video_4 from '../../assets/videos/pet_video_4.mp4'
 import pet_video_5 from '../../assets/videos/pet_video_5.mp4'
 import pet_video_6 from '../../assets/videos/pet_video_6.mp4'
+import { useNavigate } from 'react-router-dom'
+import { ROUTE_URL } from '../../others/Globals'
 
 const HeroSection: React.FC = () => {
+   const m_navTo = useNavigate()
+
    return (
       <section className='
          relative h-screen 
@@ -35,7 +39,7 @@ const HeroSection: React.FC = () => {
                <h1 className='text-7xl mb-4'>Pet Heaven</h1>
                <p className='text-xl mb-6'>Where every animal, big or small, deserves to find a loving forever home. Begin your adoption journey today, and find yourself a furry friend!</p>
                <div className='h-14'>
-                  <button className='
+                  <button onClick={() => m_navTo(ROUTE_URL.GALLERY)} className='
                      bg-primary-500 px-5 h-full rounded-lg mr-3 hover:bg-primary-600 transition-colors
                   '>Adopt a Pet</button>
                </div>

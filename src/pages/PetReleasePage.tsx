@@ -6,11 +6,11 @@ import PetReleaseInputField from '../components/sections/PetReleaseInputField'
 
 const PetReleasePage: React.FC = () => {
    return (
-      <main>
+      <main className='flex flex-col min-h-screen'>
          <Navbar useSticky />
          <section
             style={{ backgroundImage: `url(${background_img})` }}
-            className='min-h-[45rem] bg-cover relative py-margin-3xl flex justify-center items-center'>
+            className='min-h-[45rem] bg-cover relative py-margin-3xl flex justify-center items-center flex-grow'>
 
             {/* --- TRANSLUCENT BACKGROUND --- */}
             <div className="absolute inset-0 bg-accent-50 opacity-70"></div>

@@ -1,12 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { PetApiData, Utils } from '../others/Globals'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { PetApiData, ROUTE_URL, Utils } from '../others/Globals'
 import search_icon from '../assets/SVG/search.svg'
 import Navbar from '../components/Navbar'
 import PetInfoCard from '../components/PetInfoCard'
 import FooterSection from '../components/sections/FooterSection'
 import Dropdown, { DropdownOption } from '../components/Dropdown'
+import { AuthContext } from '../common/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const AdoptionGalleryPage: React.FC = () => {
+   const m_authCtx = useContext(AuthContext)
+   const m_navTo = useNavigate()
+
    const m_loadCount = useRef<number>(-1)
    const [m_loadingCardsShown, setLoadingCardsShown] = useState<boolean>(true)
    const [m_petData, setPetData] = useState<PetApiData[]>([])
@@ -27,6 +32,11 @@ const AdoptionGalleryPage: React.FC = () => {
    }
 
    useEffect(() => {
+      // Not logged in? Re-direct to auth page first
+      if (m_authCtx && !m_authCtx.firebaseUser)  {
+         m_navTo(ROUTE_URL.AUTH)
+      }
+
       setPetTypeDropdown([
          { optionName: "Dog", isChecked: true },
          { optionName: "Cat", isChecked: true },

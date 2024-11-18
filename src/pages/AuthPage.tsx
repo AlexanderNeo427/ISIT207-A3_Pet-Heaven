@@ -91,7 +91,7 @@ const AuthPage: React.FC = () => {
    }
 
    return (
-      <main>
+      <main className='flex flex-col min-h-screen'>
          <Navbar useSticky={true} />
          <framer.section
             style={{ willChange: m_willChange }}
@@ -101,7 +101,7 @@ const AuthPage: React.FC = () => {
             }}
             animate={m_isAnimating ? 'rotated' : 'default'}
             transition={{ duration: ROTATION_TIME_MS / 1000 }}
-            className='flex justify-center items-center'>
+            className='flex-grow flex justify-center items-center'>
             <div
                style={{ perspective: '300px', transformStyle: 'preserve-3d' }}
                className='
